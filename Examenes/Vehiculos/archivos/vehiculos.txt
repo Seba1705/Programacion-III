@@ -1,0 +1,2 @@
+chevrolet;astra;452asf;250000
+peugeot;207;jvt662;250000
