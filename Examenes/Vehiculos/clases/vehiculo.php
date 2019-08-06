@@ -29,10 +29,10 @@
         public static function cargarVehiculo(){
             if($_SERVER['REQUEST_METHOD'] == 'POST'){
                 //VERIFICAMOS QUE ESTEN TODAS LAS VARIABLES
-                if( isset($_POST['marca']) && 
-                    isset($_POST['modelo']) && 
-                    isset($_POST['patente']) && 
-                    isset($_POST['precio'])){ 
+                if( isset($_POST['marca']) && !empty($_POST['marca']) &&
+                    isset($_POST['modelo']) && !empty($_POST['modelo']) &&
+                    isset($_POST['patente']) && !empty($_POST['patente']) && 
+                    isset($_POST['precio']) && !empty($_POST['precio'])){ 
                     if(Vehiculo::validarPatente(isset($_POST['patente'])))  {
                         $vehiculo = new Vehiculo($_POST['marca'], $_POST['modelo'], $_POST['patente'], $_POST['precio']);
                         Vehiculo::guardarVehiculoEnArchivo($vehiculo);
