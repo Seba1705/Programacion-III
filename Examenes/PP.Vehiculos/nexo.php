@@ -1,6 +1,7 @@
 <?php
     include_once './clases/vehiculo.php';
     include_once './clases/servicio.php';
+    include_once './clases/turno.php';
 
     $caso = '';
 
@@ -20,6 +21,15 @@
             break;
         case 'cargarTipoServicio':
             Servicio::cargarTipoServicio();
+            break;
+        case 'sacarTurno':
+            Turno::sacarTurno();
+            break;
+        case 'turnos':
+            Turno::turnos();
+            break;
+        case 'inscripciones':
+            Turno::inscripciones();
             break;
         default:
             echo "Debe ingresar un caso válido($caso).";

@@ -33,12 +33,12 @@
                     isset($_POST['modelo']) && !empty($_POST['modelo']) &&
                     isset($_POST['patente']) && !empty($_POST['patente']) && 
                     isset($_POST['precio']) && !empty($_POST['precio'])){ 
-                    if(Vehiculo::validarPatente(isset($_POST['patente'])))  {
-                        $vehiculo = new Vehiculo($_POST['marca'], $_POST['modelo'], $_POST['patente'], $_POST['precio']);
-                        Vehiculo::guardarVehiculoEnArchivo($vehiculo);
+                    if(Vehiculo::existePatente($_POST['patente']))  {
+                        echo 'Ya existe vehiculo con esa patente';
                     }
                     else{
-                        echo 'Ya existe vehiculo con esa patente';
+                        $vehiculo = new Vehiculo($_POST['marca'], $_POST['modelo'], $_POST['patente'], $_POST['precio']);
+                        Vehiculo::guardarVehiculoEnArchivo($vehiculo);
                     }   
                 }
                 else{
@@ -73,7 +73,7 @@
             return $retorno;   
         }
 
-        public static function validarPatente($patente){
+        public static function existePatente($patente){
             $listaDeVehiculos = Vehiculo::leerArchivoDeVehiculos();
             foreach($listaDeVehiculos as $vehiculo){
                 if(strcasecmp(($vehiculo->patente), $patente) == 0){
