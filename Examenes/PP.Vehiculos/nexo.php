@@ -31,6 +31,9 @@
         case 'inscripciones':
             Turno::inscripciones();
             break;
+        case 'modificarVehiculo':
+            Vehiculo::modificarVehiculo();
+            break;
         default:
             echo "Debe ingresar un caso válido($caso).";
             break;

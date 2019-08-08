@@ -125,6 +125,58 @@
             }
             return false;
         }
+
+        ////////////////////////////////////////////////////////////////////////////////////////////////////////
+        // MODIFICAR VEHICULO
+        ////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+
+        public static function modificarVehiculo(){
+            if($_SERVER['REQUEST_METHOD'] == 'POST'){
+                if( isset($_POST['patente']) && 
+                    !empty($_POST['patente']) && 
+                    Vehiculo::existePatente($_POST['patente'])){  
+                    
+                    if( isset($_POST['marca']) && !empty($_POST['marca']) &&
+                        isset($_POST['modelo']) && !empty($_POST['modelo']) &&
+                        isset($_POST['precio']) && !empty($_POST['precio']) && 
+                        isset($_FILES['foto'])){
+                        
+                        $vehiculos = Vehiculo::leerArchivoDeVehiculos();
+                        foreach( $vehiculos as $vehiculo ){
+                            if(strcasecmp($vehiculo->patente, $_POST['patente']) == 0){
+            
+                                //BACKUP
+
+                                //ACCIONES SOBRE FOTO, CAMBIO DE NOMBRE Y HUBICACION
+                                $origen = $_FILES["foto"]["tmp_name"];
+                                $nombreOriginal = $_FILES["foto"]["name"];
+                                $ext = pathinfo($nombreOriginal, PATHINFO_EXTENSION);
+                                $destinoFoto = "./img/".$_POST['patente'].".".$ext;
+                                move_uploaded_file($origen, $destinoFoto);
+
+                                //MODIFICAR DATOS
+                                $vehiculo->marca = $_POST['marca'];
+                                $vehiculo->modelo = $_POST['modelo'];
+                                $vehiculo->precio = $_POST['precio'];
+                
+                            }
+                        }
+                        // GUARDAR ARCHIVO
+                    }
+                    else{
+                        echo "No se configuraron todas las variables.";
+                    }
+                }
+                else{
+                    echo "No existe esa patente en el archivo.";
+                }
+            }
+            else{
+                echo "ERROR: Se debe llamar con metodo POST.";
+            } 
+        }
+    
     }
 
 ?>
