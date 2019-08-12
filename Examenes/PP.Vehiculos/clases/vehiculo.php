@@ -156,12 +156,13 @@
                                 }
                                 move_uploaded_file($origen, $destinoFoto);
 
-                                //MODIFICAR DATOS
-                                // $vehiculo->marca = $_POST['marca'];
-                                // $vehiculo->modelo = $_POST['modelo'];
-                                // $vehiculo->precio = $_POST['precio'];
+                                // MODIFICAR DATOS
+                                $vehiculo->marca = $_POST['marca'];
+                                $vehiculo->modelo = $_POST['modelo'];
+                                $vehiculo->precio = $_POST['precio'];
                                 
-                                echo 'Vehiculo modificado';
+                                Vehiculo::guardarListaDeVehiculos( $vehiculos );
+                                break;
                             }
                         }
                         // GUARDAR ARCHIVO
@@ -177,6 +178,16 @@
             else{
                 echo "ERROR: Se debe llamar con metodo POST.";
             } 
+        }
+
+        public static function guardarListaDeVehiculos($listaDeVehiculos){
+            $rutaArchivo = './archivos/vehiculos.txt';
+            $archivo = fopen($rutaArchivo, 'w');
+            foreach($listaDeVehiculos as $item){
+                fwrite($archivo, $item->toCSV());
+            }
+            fclose($archivo);
+            echo 'Vehiculo modificado';
         }
     
     }
