@@ -146,20 +146,22 @@
                         foreach( $vehiculos as $vehiculo ){
                             if(strcasecmp($vehiculo->patente, $_POST['patente']) == 0){
             
-                                //BACKUP
-
                                 //ACCIONES SOBRE FOTO, CAMBIO DE NOMBRE Y HUBICACION
                                 $origen = $_FILES["foto"]["tmp_name"];
                                 $nombreOriginal = $_FILES["foto"]["name"];
                                 $ext = pathinfo($nombreOriginal, PATHINFO_EXTENSION);
                                 $destinoFoto = "./img/".$_POST['patente'].".".$ext;
+                                if(file_exists($destinoFoto)){
+                                    copy($destinoFoto,"./backUpFotos/".$vehiculo->patente."_".date("Ymd").".".$ext);
+                                }
                                 move_uploaded_file($origen, $destinoFoto);
 
                                 //MODIFICAR DATOS
-                                $vehiculo->marca = $_POST['marca'];
-                                $vehiculo->modelo = $_POST['modelo'];
-                                $vehiculo->precio = $_POST['precio'];
-                
+                                // $vehiculo->marca = $_POST['marca'];
+                                // $vehiculo->modelo = $_POST['modelo'];
+                                // $vehiculo->precio = $_POST['precio'];
+                                
+                                echo 'Vehiculo modificado';
                             }
                         }
                         // GUARDAR ARCHIVO
@@ -169,7 +171,7 @@
                     }
                 }
                 else{
-                    echo "No existe esa patente en el archivo.";
+                    echo "Ingrese una patente valida.";
                 }
             }
             else{
