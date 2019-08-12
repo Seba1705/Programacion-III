@@ -88,7 +88,6 @@
         ////////////////////////////////////////////////////////////////////////////////////////////////////////
 
         public static function consultarVehiculo(){
-            $vehiculos = Vehiculo::leerArchivoDeVehiculos();
             if($_SERVER['REQUEST_METHOD'] == 'GET'){
                 if( isset($_GET['parametro']) && !empty($_GET['parametro']) ){
                     $parametro = $_GET['parametro'];
@@ -129,7 +128,6 @@
         ////////////////////////////////////////////////////////////////////////////////////////////////////////
         // MODIFICAR VEHICULO
         ////////////////////////////////////////////////////////////////////////////////////////////////////////
-
 
         public static function modificarVehiculo(){
             if($_SERVER['REQUEST_METHOD'] == 'POST'){
@@ -188,6 +186,22 @@
             }
             fclose($archivo);
             echo 'Vehiculo modificado';
+        }
+
+        ////////////////////////////////////////////////////////////////////////////////////////////////////////
+        // VEHICULOS
+        ////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+        public static function vehiculos(){
+            if($_SERVER['REQUEST_METHOD'] == 'GET'){
+                $vehiculos = Vehiculo::leerArchivoDeVehiculos();
+                foreach($vehiculos as $vehiculo){
+                    echo $vehiculo->toString();
+                }
+            }
+            else{
+                echo "ERROR: Se debe llamar con metodo GET.";
+            }
         }
     
     }

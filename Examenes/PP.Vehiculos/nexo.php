@@ -34,6 +34,9 @@
         case 'modificarVehiculo':
             Vehiculo::modificarVehiculo();
             break;
+        case 'vehiculos':
+                Vehiculo::vehiculos();
+                break;
         default:
             echo "Debe ingresar un caso válido($caso).";
             break;
