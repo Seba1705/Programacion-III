@@ -1,0 +1,1 @@
+1;Pollo;1500;2;Juan;./img/1-Pollo.jpg

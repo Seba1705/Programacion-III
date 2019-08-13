@@ -2,6 +2,7 @@
     require_once './clases/usuario.php';
     require_once './clases/archivo.php';
     require_once './clases/validar.php';
+    require_once './clases/producto.php';
 
     $caso = '';
 
@@ -22,6 +23,7 @@
             Usuario::listarUsuarios();
             break;
         case 'cargarProducto':
+            Producto::cargarProducto();
             break;
         case 'listarProducto':
             break;
