@@ -26,6 +26,7 @@
             Producto::cargarProducto();
             break;
         case 'listarProducto':
+            Producto::listarProducto();
             break;
         case 'listarProductosConParametros':
             break;

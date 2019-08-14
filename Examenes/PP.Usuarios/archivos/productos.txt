@@ -1,1 +1,3 @@
 1;Pollo;1500;2;Juan;./img/1-Pollo.jpg
+2;Carne;125;4;Juan;./img/1-Carne.jpg
+4;Pescado;125;4;Juan;./img/4-Pescado.jpg

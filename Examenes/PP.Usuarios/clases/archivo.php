@@ -31,5 +31,21 @@
             fclose($archivo); 
             return $retorno;   
         }
+
+        public static function leerProductos(){
+            $rutaArchivo = './archivos/productos.txt';
+            $retorno = array(); //Lo va a devolver con las entidades leidas
+            $archivo = fopen($rutaArchivo, 'r');
+            do{
+                $producto = trim(fgets($archivo));
+                if ($producto != ""){
+                    $producto = explode(';', $producto );
+                    array_push( $retorno, new producto( $producto[0], $producto[1], $producto[2],
+                                                        $producto[3], $producto[4], $producto[5] ));
+                }
+            }while( !feof($archivo) );
+            fclose($archivo); 
+            return $retorno;   
+        }
     }
 ?>
