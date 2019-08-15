@@ -29,8 +29,10 @@
             Producto::listarProducto();
             break;
         case 'listarProductosConParametros':
+            Producto::listarProductosConParametros();
             break;
         case 'modificarProducto':
+            Producto::modificarProducto();
             break;
         default:
             echo "Debe ingresar un caso válido($caso).";

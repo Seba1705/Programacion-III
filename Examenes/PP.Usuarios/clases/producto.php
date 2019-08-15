@@ -97,5 +97,70 @@
                 echo 'Debe llamarse con el metodo GET';
             } 
         }
+
+        /////////////////////////////////////////////////////////////////
+        // LISTAR PRODUCTO CON PARAMETROS
+        /////////////////////////////////////////////////////////////////
+
+        public static function listarProductosConParametros(){
+            if( Validaciones::existePeticionGET() ){
+
+                if( isset($_GET['criterio']) && !empty($_GET['criterio']) &&
+                    isset($_GET['valor']) && !empty($_GET['valor']) ){
+                    $criterio = $_GET['criterio'];
+                    if( strcasecmp($criterio, 'producto') == 0 ||  strcasecmp($criterio, 'usuario') == 0 ){
+                        switch( $criterio ){
+                            case 'usuario':
+                                Producto::productosPorUsuario( $_GET['valor']);
+                                break;
+                            case 'producto':
+                                Producto::productosPorProducto( $_GET['valor']);
+                                break;
+                        }
+                    }else{
+                        echo 'Ingrese un criterio de busqueda valido';
+                    }
+                }else{
+                    echo 'Debe ingresar un criterio de busqueda (Producto / Usuario) y su valor';
+                }
+            }else{
+                echo 'Debe llamarse con el metodo GET';
+            } 
+        }
+
+        public static function productosPorUsuario($valor){
+            $lista = Archivo::leerProductos();
+            $flag = true;
+            echo 'LISTA DE PRODUCTOS' . PHP_EOL . PHP_EOL;
+            foreach( $lista as $item ){
+                if( strcasecmp($item->nombreUsuario, $valor) == 0){
+                    echo $item->toString();
+                    $flag = false;
+                }
+            }
+            if( $flag ) echo 'No hay productos asociados al valor: ' . $valor;
+            
+        }
+
+        public static function productosPorProducto($valor){
+            $lista = Archivo::leerProductos();
+            $flag = true;
+            echo 'LISTA DE PRODUCTOS' . PHP_EOL . PHP_EOL;
+            foreach( $lista as $item ){
+                if( strcasecmp($item->nombre, $valor) == 0){
+                    echo $item->toString();
+                    $flag = false;
+                }
+            }
+            if( $flag ) echo 'No hay productos asociados al valor: ' . $valor;
+        }
+
+        /////////////////////////////////////////////////////////////////
+        // MODIFICAR PRODUCTO
+        /////////////////////////////////////////////////////////////////
+
+        public static function modificarProducto(){
+            echo 'Producto modificado';
+        }
     }
 ?>
