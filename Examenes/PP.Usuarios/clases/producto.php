@@ -44,7 +44,7 @@
                             $origen = $_FILES["imagen"]["tmp_name"];
                             $nombreOriginal = $_FILES["imagen"]["name"];
                             $ext = pathinfo($nombreOriginal, PATHINFO_EXTENSION);
-                            $destinoFoto = "./img/".$_POST['id']."-".$_POST['nombre'].".".$ext;
+                            $destinoFoto = "./img/".$_POST['id'].".".$ext;
                             move_uploaded_file($origen, $destinoFoto);
                             
                             $producto = new Producto(   $_POST['id'], 
@@ -180,7 +180,7 @@
                                     $origen = $_FILES["imagen"]["tmp_name"];
                                     $nombreOriginal = $_FILES["imagen"]["name"];
                                     $ext = pathinfo($nombreOriginal, PATHINFO_EXTENSION);
-                                    $destinoFoto = "./img/".$_POST['id']."-".$_POST['nombre'].".".$ext;
+                                    $destinoFoto = $item->imagen;
                                     if(file_exists($destinoFoto)){
                                         copy($destinoFoto, "./backUpFotos/".$_POST['id']."_".date("Ymd").".".$ext);
                                     }

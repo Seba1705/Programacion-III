@@ -1,4 +1,4 @@
-1;Pollo;1500;2;Juan;./img/1-Pollo.jpg
-2;Carne;125;4;Juan;./img/1-Carne.jpg
-4;Pescado;125;4;Juan;./img/4-Pescado.jpg
-5;Fideos;10;5;Jose;./img/5-Fideos.jpg
+1;Milanesa;25;6;Juan;./img/1.jpg
+2;Lechuga;25;6;Juan;./img/1.jpg
+4;Pescado;125;4;Juan;./img/4.jpg
+5;Fideos;10;5;Jose;./img/5.jpg
