@@ -160,7 +160,50 @@
         /////////////////////////////////////////////////////////////////
 
         public static function modificarProducto(){
-            echo 'Producto modificado';
+            if( Validaciones::existePeticionPOST() ){
+                if( isset($_POST['id']) && !empty($_POST['id']) &&
+                    isset($_POST['nombre']) && !empty($_POST['nombre']) &&
+                    isset($_POST['precio']) && !empty($_POST['precio']) &&
+                    isset($_POST['cantidad']) && !empty($_POST['cantidad']) &&
+                    isset($_POST['usuario']) && !empty($_POST['usuario']) &&
+                    isset($_FILES['imagen']) && !empty($_FILES['imagen']) ){
+                    if( Producto::existeId($_POST['id']) ){
+                        if( Usuario::existeNombre($_POST['usuario']) ){
+                            $productos = Archivo::leerProductos();
+                            foreach( $productos as $item ){
+                                if( strcasecmp($item->id, $_POST['id']) == 0){
+                                    $item->precio = $_POST['precio'];
+                                    $item->cantidad = $_POST['cantidad'];
+                                    $item->usuario = $_POST['usuario'];
+                                    $item->nombre = $_POST['nombre'];
+
+                                    $origen = $_FILES["imagen"]["tmp_name"];
+                                    $nombreOriginal = $_FILES["imagen"]["name"];
+                                    $ext = pathinfo($nombreOriginal, PATHINFO_EXTENSION);
+                                    $destinoFoto = "./img/".$_POST['id']."-".$_POST['nombre'].".".$ext;
+                                    if(file_exists($destinoFoto)){
+                                        copy($destinoFoto, "./backUpFotos/".$_POST['id']."_".date("Ymd").".".$ext);
+                                    }
+                                    move_uploaded_file($origen, $destinoFoto);
+
+                                    echo 'Se modifico el producto: ' . $item->toString();
+                                    break;
+                                }
+                            }
+                            Archivo::guardarTodos( './archivos/productos.txt', $productos );
+                        }else{
+                            echo 'No existe usuario con el nombre: ' . $_POST['usuario'];
+                        }
+                    }else{
+                        echo 'No existe producto con el id: ' . $_POST['id'];
+                    }       
+                }else{
+                    echo 'No se configuraron todas las variables';
+                }
+            }else{
+                echo 'Debe llamarse con el metodo POST';
+            }
         }
+        
     }
 ?>
