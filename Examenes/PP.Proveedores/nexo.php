@@ -14,5 +14,30 @@
         case 'cargarProveedor':
             Proveedor::cargarProveedor();
             break;
+        case 'consultarProveedor':
+            Proveedor::consultarProveedor();
+            break;
+        case 'proveedores':
+            Proveedor::proveedores();
+            break;
+        case 'hacerPedido':
+            Pedido::hacerPedido();
+            break;
+        case 'listarPedidos':
+            Pedido::listarPedidos();
+            break;
+        case 'listarPedidoProveedor':
+            Pedido::listarPedidoProveedor();
+            break;
+        case 'modificarProveedor':
+            Proveedor::modificarProveedor();
+            break;
+        case 'fotosBack':
+            Proveedor::fotosBack();
+            break;
+        default:
+            echo 'Debe ingresar un caso valido';
+            break;
+
     }
 ?>

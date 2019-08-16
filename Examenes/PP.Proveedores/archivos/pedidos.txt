@@ -1,0 +1,7 @@
+1;Pollo;5
+1;Pollo;5
+1;Pollo;5
+3;Pollo;5
+5;Pollo;5
+9;Pescado;8
+3;Lechuga;9

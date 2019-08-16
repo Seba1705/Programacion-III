@@ -37,5 +37,18 @@
             return $listaDeProveedores;
         }
         
+        public static function leerPedidos(){
+            $listaDePedidos = array();
+            $archivo = fopen( './archivos/pedidos.txt', 'r' );
+            do{
+                $pedido = trim( fgets($archivo) );
+                if( $pedido != '' ){
+                    $pedido = explode( ';', $pedido );
+                    array_push( $listaDePedidos, new pedido($pedido[0], $pedido[1], $pedido[2]) );
+                }
+            }while( !feof($archivo) );
+            fclose( $archivo );
+            return $listaDePedidos;
+        }
     }
 ?>
