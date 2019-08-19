@@ -3,7 +3,8 @@
 
     require_once './cliente.php';
 
-    if( isset($_GET['nombre']) && !empty($_GET['nombre']) &&
+    if($_SERVER['REQUEST_METHOD'] == 'GET'){
+        if( isset($_GET['nombre']) && !empty($_GET['nombre']) &&
         isset($_GET['correo']) && !empty($_GET['correo']) &&
         isset($_GET['clave']) && !empty($_GET['clave']) ){
         
@@ -11,8 +12,9 @@
         Cliente::guardarEnArchivo( './clientes/clientesActuales.txt', $cliente );
 
         echo 'Se guardo el cliente: ' . $cliente->toString();
-    }else{
-        echo 'Debe ingresar los datos del cliente';
+        }else{
+            echo 'Debe ingresar los datos del cliente';
+        }
     }
 
 ?>          

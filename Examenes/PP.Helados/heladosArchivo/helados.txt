@@ -1,0 +1,2 @@
+vainilla;40;./heladosImagen/vainilla.142808.jpg
+vainilla;40;./heladosImagen/vainilla.151259.jpg
