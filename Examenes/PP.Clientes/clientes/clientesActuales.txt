@@ -1,0 +1,3 @@
+Juan;juan@gmail.com;1234
+Jose;jose@gmail.com;1234
+Pedro;pedro@gmail.com;1234
