@@ -36,5 +36,19 @@
             return $listaDeAlumnos;
         }
 
+        public static function retornarMaterias(){
+            $listaDeMaterias = array();
+            $archivo = fopen( './archivos/materias.txt', 'r' );
+            do{
+                $materia = trim( fgets($archivo) );
+                if( $materia != '' ){
+                    $materia = explode( ';', $materia );
+                    array_push( $listaDeMaterias, new Materia($materia[0], $materia[1], $materia[2], $materia[3]) );
+                }
+            }while( !feof($archivo) );
+            fclose( $archivo );
+            return $listaDeMaterias;
+        }
+
     }
 ?>

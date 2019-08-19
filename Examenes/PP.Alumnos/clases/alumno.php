@@ -24,6 +24,15 @@
             echo $alumno->toString();
         }
 
+        public static function buscarPorEmail( $email ){
+            $alumnos = Archivo::retornarAlumnos();
+            foreach( $alumnos as $alumno ){
+                if( strcasecmp($alumno->email, $email) == 0 )
+                    return $alumno;
+            }
+            return null;
+        }
+
         //1-(2pt.) caso: cargarAlumno (post): Se debenguardar los siguientes datos: nombre, apellido, email y foto. Losdatos se guardan en el archivo de texto alumnos.txt, tomando el emailcomo identificador.
         public static function cargarAlumno(){
             if( Archivo::existePeticionPOST() ){
