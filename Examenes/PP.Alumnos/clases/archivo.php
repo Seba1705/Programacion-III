@@ -1,0 +1,40 @@
+<?php
+    class Archivo{
+        public static function existePeticionPOST(){
+            return $_SERVER['REQUEST_METHOD'] == 'POST' ? true : false;
+        }
+
+        public static function existePeticionGET(){
+            return $_SERVER['REQUEST_METHOD'] == 'GET' ? true : false;
+        }
+
+        public static function guardarUno( $path, $objeto ){
+            $archivo = fopen( $path, 'a+' );
+            fwrite( $archivo, $objeto->toCsv() );
+            fclose( $archivo );
+        }
+
+        public static function guardarTodos( $path, $lista ){
+            $archivo = fopen( $path, 'w' );
+            foreach( $lista as $objeto ){
+                fwrite( $archivo, $objeto->toCsv() );
+            }
+            fclose( $archivo );
+        }
+
+        public static function retornarAlumnos(){
+            $listaDeAlumnos = array();
+            $archivo = fopen( './archivos/alumnos.txt', 'r' );
+            do{
+                $alumno = trim( fgets($archivo) );
+                if( $alumno != '' ){
+                    $alumno = explode( ';', $alumno );
+                    array_push( $listaDeAlumnos, new Alumno($alumno[0], $alumno[1], $alumno[2], $alumno[3]) );
+                }
+            }while( !feof($archivo) );
+            fclose( $archivo );
+            return $listaDeAlumnos;
+        }
+
+    }
+?>

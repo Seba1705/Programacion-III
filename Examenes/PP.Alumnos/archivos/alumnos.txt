@@ -1,0 +1,2 @@
+Juan;Perez;juan@gmail.com;./img/juan@gmail.com.jpg
+Jose;Perez;jose@gmail.com;./img/jose@gmail.com.jpg

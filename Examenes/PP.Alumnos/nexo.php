@@ -1,5 +1,7 @@
 <?php
+    require_once './clases/archivo.php';
     require_once './clases/alumno.php';
+
 
     $caso = '';
     
@@ -12,9 +14,9 @@
         case 'cargarAlumno':
             Alumno::cargarAlumno();
             break;
-        // case 'consultarAlumno':
-        //     Alumno::consultarAlumno();
-        //     break;
+        case 'consultarAlumno':
+            Alumno::consultarAlumno();
+            break;
         // case 'cargarMateria':
         //     Materia::cargarMateria();
         //     break;
