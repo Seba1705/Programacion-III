@@ -5,13 +5,12 @@
 
     if($_SERVER['REQUEST_METHOD'] == 'GET'){
         if( isset($_GET['nombre']) && !empty($_GET['nombre']) &&
-        isset($_GET['correo']) && !empty($_GET['correo']) &&
-        isset($_GET['clave']) && !empty($_GET['clave']) ){
-        
-        $cliente = new Cliente( $_GET['nombre'], $_GET['correo'], $_GET['clave'] );
-        Cliente::guardarEnArchivo( './clientes/clientesActuales.txt', $cliente );
+            isset($_GET['correo']) && !empty($_GET['correo']) &&
+            isset($_GET['clave']) && !empty($_GET['clave']) ){
+            $cliente = new Cliente( $_GET['nombre'], $_GET['correo'], $_GET['clave'] );
+            Cliente::guardarEnArchivo( './clientes/clientesActuales.txt', $cliente );
 
-        echo 'Se guardo el cliente: ' . $cliente->toString();
+            echo 'Se guardo el cliente: ' . $cliente->toString();
         }else{
             echo 'Debe ingresar los datos del cliente';
         }

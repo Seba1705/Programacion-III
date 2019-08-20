@@ -35,6 +35,14 @@
             $this->foto = $foto;
         }
 
+        public function setSabor( $sabor ){
+            $this->sabor = $sabor;
+        }
+
+        public function setPrecio( $precio ){
+            $this->precio = $precio;
+        }
+
         public function toString(){
             return 'Sabor: ' .$this->sabor. ' Precio: ' . $this->precio. ' Foto: ' .$this->foto. PHP_EOL;
         }

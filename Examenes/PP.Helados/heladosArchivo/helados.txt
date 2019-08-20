@@ -1,2 +1,5 @@
-vainilla;40;./heladosImagen/vainilla.142808.jpg
-vainilla;40;./heladosImagen/vainilla.151259.jpg
+Dulce de leche;20;
+chocolate;10;./heladosImagen/chocolate.032952.jpg
+Americana;15;
+Sambayon;30;
+Kinder;35;
