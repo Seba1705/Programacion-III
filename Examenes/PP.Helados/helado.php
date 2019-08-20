@@ -74,6 +74,15 @@
             fclose( $archivo );
             return $helados;
         }
+
+        public static function guardarListaDeHelados( $lista ){
+            $archivo = fopen( './heladosArchivo/helados.txt', 'w' );
+            foreach( $lista as $objeto ){
+                fwrite( $archivo, $objeto->toCsv() );
+            }
+            fclose( $archivo );
+        }
+
     }
 
     interface IVendible {

@@ -5,7 +5,30 @@
 
     if($_SERVER['REQUEST_METHOD'] == 'POST'){
         if( isset($_POST['queDeboHacer']) && strcasecmp($_POST['queDeboHacer'], 'borrar') == 0){
-            echo 'ok';
+            if( isset($_POST['sabor']) && !empty($_POST['sabor'])){
+                $helados = Helado::retornarHeladosDeArchivo();
+                $flag = true;
+                for( $i=0, $a=count($helados) ; $i<$a; $i++ ){
+                    if( strcasecmp($helados[$i]->getSabor(), $_POST['sabor']) == 0 ){
+                        $origen = $helados[$i]->getFoto();
+                        $imagen = explode('.', $origen);
+                        $ext = $imagen[3];
+                        $destinoFoto = "./heladosBorrados/".$_POST['sabor'].".borrado.".date("His").".".$ext;
+                        if(copy($origen, $destinoFoto)){
+                            unlink($origen);
+                        }
+                        
+                        $flag = false;
+                        unset( $helados[$i] );
+                        Helado::guardarListaDeHelados($helados);
+                        echo 'Helado modificado';
+                        break;
+                    }
+                }
+                if( $flag ) echo 'No existe el sabor';
+            }else{
+                echo 'Ingrese el sabor';
+            }
         }else{
             echo 'Ingrese una accion valida';
         }

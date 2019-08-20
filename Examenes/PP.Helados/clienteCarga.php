@@ -8,7 +8,7 @@
             isset($_GET['correo']) && !empty($_GET['correo']) &&
             isset($_GET['clave']) && !empty($_GET['clave']) ){
             $cliente = new Cliente( $_GET['nombre'], $_GET['correo'], $_GET['clave'] );
-            Cliente::guardarEnArchivo( './clientes/clientesActuales.txt', $cliente );
+            Cliente::guardarEnArchivo( $cliente );
 
             echo 'Se guardo el cliente: ' . $cliente->toString();
         }else{

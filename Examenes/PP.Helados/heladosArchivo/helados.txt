@@ -1,5 +1,3 @@
-Dulce de leche;20;
-chocolate;10;./heladosImagen/chocolate.032952.jpg
-Americana;15;
-Sambayon;30;
-Kinder;35;
+vainilla;40;./heladosImagen/vainilla.133510.jpg
+chocolate;50;./heladosImagen/chocolate.141016.jpg
+americana;28;./heladosImagen/americana.135424.jpg

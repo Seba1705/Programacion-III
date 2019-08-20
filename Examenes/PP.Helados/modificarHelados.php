@@ -3,14 +3,6 @@
 
     require_once './helado.php';
 
-    function guardarListaDeHelados( $lista ){
-        $archivo = fopen( './heladosArchivo/helados.txt', 'w' );
-        foreach( $lista as $objeto ){
-            fwrite( $archivo, $objeto->toCsv() );
-        }
-        fclose( $archivo );
-    }
-
     if($_SERVER['REQUEST_METHOD'] == 'POST'){
         if( isset($_POST['sabor']) && !empty($_POST['sabor']) &&
             isset($_POST['precio']) && !empty($_POST['precio']) && 
@@ -32,7 +24,7 @@
                     $helado->setFoto($destinoFoto);
                     echo 'Helado modificado';
                     $flag = false;
-                    guardarListaDeHelados($helados);
+                    Helado::guardarListaDeHelados($helados);
                     break;
                 }
             }

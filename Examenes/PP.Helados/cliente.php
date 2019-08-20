@@ -19,8 +19,8 @@
             return $this->nombre. ';' .$this->correo. ';' .$this->clave. PHP_EOL;
         }
 
-        public static function guardarEnArchivo( $path, $cliente ){
-            $archivo = fopen( $path, 'a+' );
+        public static function guardarEnArchivo( $cliente ){
+            $archivo = fopen( './clientes/clientesActuales.txt', 'a+' );
             fwrite( $archivo, $cliente->toCsv() );
             fclose( $archivo );
         }
