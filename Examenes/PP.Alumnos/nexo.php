@@ -23,9 +23,9 @@
         case 'inscribirAlumno':
             Materia::inscribirAlumno();
             break;
-        // case 'cargarAlumno':
-        //     Alumno::cargarAlumno();
-        //     break;
+        case 'modificarAlumno':
+            Alumno::modificarAlumno();
+            break;
         // case 'inscripciones':
         //     Alumno::inscripciones();
         //     break;

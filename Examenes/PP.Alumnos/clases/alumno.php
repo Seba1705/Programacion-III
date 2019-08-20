@@ -93,5 +93,43 @@
             }
         }
 
+        //7-(2 pts.) caso: modificarAlumno(post): Debe poder modificar todos los datos del alumno menos el email y guardar la foto antigua en la carpeta/backUpFotos, el nombre seráel apellido y la fecha.
+        public static function modificarAlumno(){
+            if( Archivo::existePeticionPOST() ){
+                if( isset($_POST['nombre']) && !empty($_POST['nombre']) &&
+                    isset($_POST['apellido']) && !empty($_POST['apellido']) &&
+                    isset($_POST['email']) && !empty($_POST['email']) &&
+                    isset($_FILES['foto']) ){
+                    if( Alumno::existeEmail( $_POST['email']) ){
+                        $alumnos = Archivo::retornarAlumnos();
+                        foreach( $alumnos as $item ){
+                            if( strcasecmp($item->email, $_POST['email']) == 0){
+                                $item->nombre = $_POST['nombre'];
+                                $item->apellido = $_POST['apellido'];
+
+                                $origen = $_FILES["foto"]["tmp_name"];
+                                $nombreOriginal = $_FILES["foto"]["name"];
+                                $ext = pathinfo($nombreOriginal, PATHINFO_EXTENSION);
+                                $destinoFoto = "./img/".$item->email.".".$ext;
+                                
+                                if(file_exists($destinoFoto)){
+                                    copy($destinoFoto, "./backUpFotos/".$item->apellido."_".date("Ymd").".".$ext);
+                                }
+                                move_uploaded_file($origen, $destinoFoto);
+                                echo 'Se modifico el alumno: ' . $item->toString();
+                                break;
+                            }
+                        }
+                        Archivo::guardarTodos( './archivos/alumnos.txt', $alumnos );
+                    }else{
+                        echo 'No existe un alumno con ese email';
+                    }
+                }else{
+                    echo 'Debe configurar todas las variables';
+                }
+            }else{  
+                echo 'Se debe llamar con el metodo POST';
+            }
+        }
     }
 ?>
