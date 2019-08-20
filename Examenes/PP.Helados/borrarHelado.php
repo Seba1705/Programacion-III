@@ -21,7 +21,7 @@
                         $flag = false;
                         unset( $helados[$i] );
                         Helado::guardarListaDeHelados($helados);
-                        echo 'Helado modificado';
+                        echo 'Helado borrado';
                         break;
                     }
                 }

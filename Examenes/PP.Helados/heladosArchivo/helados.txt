@@ -1,3 +1,2 @@
 vainilla;40;./heladosImagen/vainilla.133510.jpg
-chocolate;50;./heladosImagen/chocolate.141016.jpg
 americana;28;./heladosImagen/americana.135424.jpg
