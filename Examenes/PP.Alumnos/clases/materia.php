@@ -47,21 +47,7 @@
             return false;
         }
 
-        //4-(2pts.) caso: inscribirAlumno(get):Se recibe nombre, apellido, mail del alumno, materia y código de la materia y se guarda en el archivo inscripciones.txt restando un cupo a la materia en el archivo materias.txt. Si no hay cupo o la materia no existe informar cada caso particular.
-        public static function inscribirAlumno(){
-            if( Archivo::existePeticionGET() ){
-                if( isset($_GET['nombre']) && !empty($_GET['nombre']) &&
-                    isset($_GET['apelido']) && !empty($_GET['apelido']) &&
-                    isset($_GET['email']) && !empty($_GET['email']) &&
-                    isset($_GET['materia']) && !empty($_GET['materia']) &&
-                    isset($_GET['codigo']) && !empty($_GET['codigo'])){
-                    
-                }else{
-                    echo 'Debe configurar todas las variables';
-                }
-            }else{
-                echo 'Se debe llamar con el metodo GET';
-            }
-        }
+       
+
     }
 ?>

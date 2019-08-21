@@ -2,6 +2,7 @@
     require_once './clases/archivo.php';
     require_once './clases/alumno.php';
     require_once './clases/materia.php'; 
+    require_once './clases/inscripcion.php';
 
     $caso = '';
     
@@ -21,7 +22,7 @@
             Materia::cargarMateria();
             break;
         case 'inscribirAlumno':
-            Materia::inscribirAlumno();
+            Inscripcion::inscribirAlumno();
             break;
         case 'modificarAlumno':
             Alumno::modificarAlumno();
@@ -29,9 +30,9 @@
         // case 'inscripciones':
         //     Alumno::inscripciones();
         //     break;
-        // case 'inscripciones':
-        //     Alumno::inscripciones();
-        //     break;
+        case 'alumnos':
+             Alumno::alumnos();
+             break;
         default:
             echo 'Debe ingresar un caso valido';
 

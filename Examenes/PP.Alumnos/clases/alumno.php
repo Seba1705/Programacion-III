@@ -17,7 +17,7 @@
         }
     
         public function toString(){
-            return 'Nombre : ' .$this->nombre. ' Apellido: ' .$this->apellido. ' Email: ' .$this->email. ' Foto: ' .$this->email. PHP_EOL;
+            return 'Nombre : ' .$this->nombre. ' Apellido: ' .$this->apellido. ' Email: ' .$this->email. ' Foto: ' .$this->foto. PHP_EOL;
         }
 
         public static function mostrarAlumno( $alumno ){
@@ -129,6 +129,16 @@
                 }
             }else{  
                 echo 'Se debe llamar con el metodo POST';
+            }
+        }
+
+        //8-(2 pts.) caso:alumnos(get): Mostrar una tabla con todos los datos de los alumnos, incluida la foto.
+        public static function alumnos(){
+            if( Archivo::existePeticionGET() ){
+                echo 'Alumnos' . PHP_EOL . PHP_EOL;
+                array_map( 'Alumno::mostrarAlumno', Archivo::retornarAlumnos());
+            }else{
+                echo 'Debe llamarse con el metodo GET';
             }
         }
     }
