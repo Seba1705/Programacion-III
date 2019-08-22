@@ -20,7 +20,7 @@
         }
 
         public static function guardarEnArchivo( $cliente ){
-            $archivo = fopen( './clientes/clientesActuales.txt', 'a+' );
+            $archivo = fopen('./clientes/clientesActuales.txt', 'a+');
             fwrite( $archivo, $cliente->toCsv() );
             fclose( $archivo );
         }
