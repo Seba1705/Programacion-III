@@ -1,0 +1,3 @@
+aguirre;sebastian;seba@gmail.com;Fisica;3
+perez;jose;jose@gmail.com;Fisica;3
+perez;jose;josE@gmail.com;Fisica;5

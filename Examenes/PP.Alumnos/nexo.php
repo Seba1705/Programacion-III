@@ -27,9 +27,12 @@
         case 'modificarAlumno':
             Alumno::modificarAlumno();
             break;
-        // case 'inscripciones':
-        //     Alumno::inscripciones();
-        //     break;
+        case 'inscripciones':
+            Inscripcion::inscripciones();
+            break;
+        case 'inscripcionesParametro':
+            Inscripcion::inscripcionesParametro();
+            break;
         case 'alumnos':
              Alumno::alumnos();
              break;

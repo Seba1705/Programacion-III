@@ -50,5 +50,22 @@
             return $listaDeMaterias;
         }
 
+        public static function retornarInscripciones(){
+            $listaDeInscripciones = array();
+            $archivo = fopen( './archivos/inscripciones.txt', 'r' );
+            do{
+                $inscripcion = trim( fgets($archivo) );
+                if( $inscripcion != '' ){
+                    $inscripcion = explode( ';', $inscripcion );
+                    array_push( $listaDeInscripciones, new Inscripcion( $inscripcion[0], 
+                                                                        $inscripcion[1], 
+                                                                        $inscripcion[2], 
+                                                                        $inscripcion[3], 
+                                                                        $inscripcion[4]));
+                }
+            }while( !feof($archivo) );
+            fclose( $archivo );
+            return $listaDeInscripciones;
+        }
     }
 ?>

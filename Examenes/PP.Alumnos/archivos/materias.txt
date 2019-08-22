@@ -1,2 +1,4 @@
 Matematica;2;30;21
-
+Fisica;3;7;3
+Literatura;4;10;4
+Metodologia;5;9;5
