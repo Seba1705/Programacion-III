@@ -1,5 +1,5 @@
 <?php
-    //Usuario.php. Crear, en ./clases, la clase Usuario con atributos privados (email y clave), constructor(que inicialice los atributos), un método de instancia ToJSON(), que retornará los datos de la instancia (en una cadena con formato JSON). Agregar:Método de instancia GuardarEnArchivo(), que agregará al usuario en ./archivos/usuarios.json.Retornará un JSON que contendrá: éxito(bool) y mensaje(string)indicando lo acontecido. Método de clase TraerTodos(), que retornará un array de objetos de tipo Usuario.Método de clase VerificarExistencia($usuario), retornará true, si el usuarioestá registrado(invocar a TraerTodos), caso contrario retornará false
+
     class Usuario{
         private $email;
         private $clave;
@@ -9,12 +9,26 @@
             $this->clave = $clave;
         }
 
-        public function toJson(){
-            return json_encode($this);
+        // Retornará los datos de la instancia (en una cadena con formato JSON).
+        public function toJSON(){
+            return '{"email":"'.$this->email.'","clave":"'.$this->clave.'"}';
         }
 
+        // Agregará al usuario en ./archivos/usuarios.json. Retornará un JSON que contendrá: éxito(bool) y mensaje(string)indicando lo acontecido.
         public function guardarEnArchivo(){
+            $file = './archivos/usuarios.json';
+            file_put_contents($file, $this->toJSON());
+        }
+
+        // Retornará un array de objetos de tipo Usuario.
+        public static function traerTodos(){
+
+        }
+
+        // Retornará true, si el usuarioestá registrado(invocar a TraerTodos), caso contrario retornará false
+        public static function verificarExistencia( $usuario ){
 
         }
     }
+
 ?>
