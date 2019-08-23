@@ -16,8 +16,16 @@
 
         // Agregará al usuario en ./archivos/usuarios.json. Retornará un JSON que contendrá: éxito(bool) y mensaje(string)indicando lo acontecido.
         public function guardarEnArchivo(){
-            $file = './archivos/usuarios.json';
-            file_put_contents($file, $this->toJSON());
+            $retorno = "";
+            
+            $file = fopen("./archivos/usuarios.json", "a");
+            if(fwrite($file, $this->ToJSON()."\r\n"))
+                $retorno = '{"exito":"true","mensaje":"Se pudo guardar en archivo"}';
+            else
+                $retorno = '{"exito":"false","mensaje":"No se pudo guardar en archivo"}';
+            
+            fclose($file);
+            return $retorno;
         }
 
         // Retornará un array de objetos de tipo Usuario.
