@@ -9,7 +9,7 @@
         }
 
         public function saludar(){
-            echo "Hola :D soy $this->nombre";
+            return "Hola :D soy $this->nombre";
         }
     }
 ?>
