@@ -20,8 +20,10 @@
                     AlumnoDAO::guargarAlumno( $alumno );
         
                 }else{
-                    echo '{"mensaje":"Se debe llamar con el metodo POST"}';
+                    echo '{"mensaje":"Se deben configurar todas las variables"}';
                 }
+            }else{
+                echo '{"mensaje":"Se debe llamar con el metodo POST"}';
             }
         }
 
