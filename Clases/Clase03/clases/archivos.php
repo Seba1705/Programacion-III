@@ -1,13 +1,14 @@
 <?php
     class Archivo
     {
-
         public static function guardarUno( $path, $objeto )
         {
             if ( file_exists($path) ) {
                 $archivo = fopen($path, 'a+');
                 fwrite( $archivo, $objeto->toJSON() . PHP_EOL );
                 fclose( $archivo );
+                echo '{"mensaje":"Guardado correctamente"}';
+
             } else {
                 echo '{"mensaje":"El archivo no existe"}';
             }
@@ -30,7 +31,6 @@
                     // Antes de cargar parsearlo a la entidad correspondiente (Alumno)$item
                     $objeto = json_decode($item);
                     array_push( $retorno, $objeto );
-                    
                 }
             }while( !feof($archivo) );
             fclose($archivo); 

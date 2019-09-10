@@ -1,9 +1,9 @@
 <?php
     // session_start();
 
-    if(!isset($_SESSION['alumnos'])){
-        $_SESSION['alumnos'] = [];
-    }
+    // if(!isset($_SESSION['alumnos'])){
+    //     $_SESSION['alumnos'] = [];
+    // }
 
     class AlumnoDAO{
         
