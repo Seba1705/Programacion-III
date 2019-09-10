@@ -18,8 +18,8 @@
         case 'cargarAlumno':
             Alumno::cargarAlumno();
             break;
-        case 'retornarAlumnos':
-            Alumno::retornarAlumnos();
+        case 'mostrarAlumnos':
+            Alumno::mostrarAlumnos();
             break;
         default:
             echo '{"mensaje":"Debe ingresar un caso valido"}';

@@ -17,7 +17,7 @@
         public static function guardarTodos( $path, $lista ){
             $archivo = fopen( $path, 'w' );
             foreach( $lista as $item ){
-                fwrite( $archivo, $objeto->toJSON() . PHP_EOL );
+                fwrite( $archivo, $item->toJSON() . PHP_EOL );
             }
             fclose( $archivo );
         }
@@ -37,6 +37,6 @@
             return $retorno;   
         }
 
-    
+        
     }
 ?>

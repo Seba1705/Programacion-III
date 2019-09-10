@@ -1,5 +1,0 @@
-{"nombre":"juan","apellido":"gomez"}
-{"nombre":"ramon","apellido":"perez"}
-{"nombre":"ramon","apellido":"perez"}
-{"nombre":"ramon","apellido":"perez"}
-{"nombre":"ramon","apellido":"perez","legajo":"21","edad":"25"}
