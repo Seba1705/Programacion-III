@@ -3,10 +3,12 @@
 
     class Alumno extends Persona{
         public $legajo;
+        public $foto;
 
-        function __construct( $nombre, $apellido, $legajo ){
+        function __construct( $nombre, $apellido, $legajo, $foto ){
             parent::__construct( $nombre, $apellido );
             $this->legajo = $legajo;
+            $this->foto = $foto;
         }
 
         function toJSON(){
@@ -15,12 +17,21 @@
 
         public static function cargarAlumno(){
             if( $_SERVER['REQUEST_METHOD'] == 'POST' ){
-                if( isset($_POST['nombre'], $_POST['apellido'], $_POST['legajo']) && 
+                if( isset($_POST['nombre'], $_POST['apellido'], $_POST['legajo'], $_FILES['imagen']) && 
                     !empty($_POST['nombre']) && $_POST['legajo'] && $_POST['apellido']){
-                    
-                        $alumno = new Alumno( $_POST['nombre'], $_POST['apellido'], $_POST['legajo'] );
-                    AlumnoDAO::guardarUnoEnArchivo( './archivos/alumnos.json', $alumno );
-                    echo '{"mensaje":"Alumno cargado"}';
+                    if(!Alumno::existeAlumno( $_POST['legajo'])){
+                        $origen = $_FILES["imagen"]["tmp_name"];
+                        $nombreOriginal = $_FILES["imagen"]["name"];
+                        $ext = pathinfo($nombreOriginal, PATHINFO_EXTENSION); 
+                        $destinoFoto = './img/' . $_POST['legajo'] . '.' . $ext; 
+                        move_uploaded_file($origen, $destinoFoto);
+                                
+                        $alumno = new Alumno( $_POST['nombre'], $_POST['apellido'], $_POST['legajo'], $destinoFoto );
+                        AlumnoDAO::guardarUnoEnArchivo( './archivos/alumnos.json', $alumno );
+                        echo '{"mensaje":"Alumno cargado"}';
+                    }else{
+                        echo '{"mensaje":"Ya existe alumno con ese legajo"}';
+                    }
                 }else{
                     echo '{"mensaje":"Se deben configurar todas las variables"}';
                 }
@@ -40,16 +51,27 @@
             }
         }
 
+        public static function mostrarImagenes(){
+            if( $_SERVER['REQUEST_METHOD'] == 'GET' ){
+                $alumnos = Alumno::retornarAlumnos();
+                foreach ($alumnos as $value) {
+                    echo '<img src="' . $value->foto . '"/>';
+                }
+            }else{
+                echo '{"mensaje":"Se debe llamar con el metodo GET"}';
+            }
+        }
+
         public static function retornarAlumnos(){
             $datos = AlumnoDAO::leerTodos('./archivos/alumnos.json');
             $alumnos = array();
             foreach ($datos as $key => $value) {
-                array_push($alumnos, new Alumno($value->nombre, $value->apellido, $value->legajo));
+                array_push($alumnos, new Alumno($value->nombre, $value->apellido, $value->legajo, $value->foto));
             }
             return $alumnos;
         }
         
-        public static function manejarArchivo(){
+        /*public static function manejarArchivo(){
             $origen = $_FILES["imagen"]["tmp_name"];
             $nombreOriginal = $_FILES["imagen"]["name"];
             $ext = pathinfo($nombreOriginal, PATHINFO_EXTENSION);
@@ -57,10 +79,50 @@
             //$destinoFoto = './img/' . date("Ymd") . time() . '.' . $ext; 
             $destinoFoto = './img/' . date("Y") . time() . '.' . $ext; 
             move_uploaded_file($origen, $destinoFoto);
+        }*/
+
+        public static function existeAlumno( $legajo ){
+            $alumnos = Alumno::retornarAlumnos();
+            foreach( $alumnos as $alumno ){
+                if( strcasecmp($alumno->legajo, $legajo) == 0)
+                    return true;
+            }
+            return false;
         }
 
+        public static function modificarAlumno(){
+            if( $_SERVER['REQUEST_METHOD'] == 'POST' ){
+                if( isset($_POST['nombre'], $_POST['apellido'], $_POST['legajo'], $_FILES['imagen']) && 
+                    !empty($_POST['nombre']) && $_POST['legajo'] && $_POST['apellido']){
+                    if(Alumno::existeAlumno( $_POST['legajo'])){  
+                        $alumnos = Alumnos::retornarAlumnos();
+                        foreach( $alumnos as $alumno ){
+                            if( strcasecmp($alumno->legajo, $_POST['legajo']) == 0){
 
+                                $alumno->nombre = $_POST['nombre'];
+                                $alumno->apellido = $_POST['apellido'];
 
-
+                                $origen = $_FILES["imagen"]["tmp_name"];
+                                $nombreOriginal = $_FILES["imagen"]["name"];
+                                $ext = pathinfo($nombreOriginal, PATHINFO_EXTENSION); 
+                                $destinoFoto = $alumno->foto;
+                                if( file_exists($destinoFoto) ){
+                                    copy( $destinoFoto, './backUp/' . $alumno->legajo . '_' . date('Ymd') . '.' . $ext );
+                                }
+                                move_uploaded_file($origen, $destinoFoto);
+                            }
+                        }
+                        AlumnoDAO::guardarTodos('./archivos/alumnos.json', $alumnos ); 
+                        echo '{"mensaje":"Alumno modificado"}';
+                    }else{
+                        echo '{"mensaje":"No existe alumno con ese legajo"}';
+                    }
+                }else{
+                    echo '{"mensaje":"Se deben configurar todas las variables"}';
+                }
+            }else{
+                echo '{"mensaje":"Se debe llamar con el metodo POST"}';
+            }
+        }
     }
 ?>
