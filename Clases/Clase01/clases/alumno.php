@@ -1,6 +1,9 @@
 <?php
     date_default_timezone_set('America/Argentina/Buenos_Aires');
 
+    require_once 'persona.php';
+
+
     class Alumno extends Persona{
         public $legajo;
         public $foto;
@@ -17,18 +20,19 @@
 
         public static function cargarAlumno(){
             if( $_SERVER['REQUEST_METHOD'] == 'POST' ){
-                if( isset($_POST['nombre'], $_POST['apellido'], $_POST['legajo'], $_FILES['imagen']) && 
-                    !empty($_POST['nombre']) && $_POST['legajo'] && $_POST['apellido']){
+                if( isset($_POST['nombre'], $_POST['apellido'], $_POST['legajo']) && 
+                    !empty($_POST['nombre']) && !empty($_POST['apellido']) && !empty($_POST['legajo'])){
                     if(!Alumno::existeAlumno( $_POST['legajo'])){
-                        $origen = $_FILES["imagen"]["tmp_name"];
-                        $nombreOriginal = $_FILES["imagen"]["name"];
+
+                        $origen = $_FILES["foto"]["tmp_name"];
+                        $nombreOriginal = $_FILES["foto"]["name"];
                         $ext = pathinfo($nombreOriginal, PATHINFO_EXTENSION); 
-                        $destinoFoto = './img/' . $_POST['legajo'] . '.' . $ext; 
+                        $destinoFoto = '../Clase01/img/' . $_POST['legajo'] . '.' . $ext; 
                         move_uploaded_file($origen, $destinoFoto);
-                                
                         $alumno = new Alumno( $_POST['nombre'], $_POST['apellido'], $_POST['legajo'], $destinoFoto );
-                        AlumnoDAO::guardarUnoEnArchivo( './archivos/alumnos.json', $alumno );
+                        AlumnoDAO::guardarUnoEnArchivo( '../Clase01/archivos/alumnos.json', $alumno );
                         echo '{"mensaje":"Alumno cargado"}';
+
                     }else{
                         echo '{"mensaje":"Ya existe alumno con ese legajo"}';
                     }
@@ -55,7 +59,7 @@
             if( $_SERVER['REQUEST_METHOD'] == 'GET' ){
                 $alumnos = Alumno::retornarAlumnos();
                 foreach ($alumnos as $value) {
-                    echo '<img src="' . $value->foto . '"/>';
+                    echo '<img src="' . $value->foto . '"/><br><br>';
                 }
             }else{
                 echo '{"mensaje":"Se debe llamar con el metodo GET"}';
@@ -63,7 +67,7 @@
         }
 
         public static function retornarAlumnos(){
-            $datos = AlumnoDAO::leerTodos('./archivos/alumnos.json');
+            $datos = AlumnoDAO::leerTodos('../Clase01/archivos/alumnos.json');
             $alumnos = array();
             foreach ($datos as $key => $value) {
                 array_push($alumnos, new Alumno($value->nombre, $value->apellido, $value->legajo, $value->foto));
@@ -92,18 +96,18 @@
 
         public static function modificarAlumno(){
             if( $_SERVER['REQUEST_METHOD'] == 'POST' ){
-                if( isset($_POST['nombre'], $_POST['apellido'], $_POST['legajo'], $_FILES['imagen']) && 
+                if( isset($_POST['nombre'], $_POST['apellido'], $_POST['legajo'], $_FILES['foto']) && 
                     !empty($_POST['nombre']) && $_POST['legajo'] && $_POST['apellido']){
                     if(Alumno::existeAlumno( $_POST['legajo'])){  
-                        $alumnos = Alumnos::retornarAlumnos();
+                        $alumnos = Alumno::retornarAlumnos();
                         foreach( $alumnos as $alumno ){
                             if( strcasecmp($alumno->legajo, $_POST['legajo']) == 0){
 
                                 $alumno->nombre = $_POST['nombre'];
                                 $alumno->apellido = $_POST['apellido'];
 
-                                $origen = $_FILES["imagen"]["tmp_name"];
-                                $nombreOriginal = $_FILES["imagen"]["name"];
+                                $origen = $_FILES["foto"]["tmp_name"];
+                                $nombreOriginal = $_FILES["foto"]["name"];
                                 $ext = pathinfo($nombreOriginal, PATHINFO_EXTENSION); 
                                 $destinoFoto = $alumno->foto;
                                 if( file_exists($destinoFoto) ){

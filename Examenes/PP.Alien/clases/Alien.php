@@ -20,7 +20,6 @@
                 echo '{"exito":true,"mensaje":"Se guardo en archivo correctamente"}';
             else
                 echo '{"exito":false,"mensaje":"No se pudo guardar el archivo"}';
-            
         }
 
         public static function TraerTodos(){
@@ -33,6 +32,20 @@
 
            return $aliens;
         }
+        
+        public static function existeAlienEnArchivo( $email ){
+            $aliens = Alien::TraerTodos();
+            foreach( $aliens as $alien ){
+                if( strcasecmp($alien->email, $email) == 0 )
+                    return true;
+            }
+            return false;
+        } 
+
+        public static function mostrarAlien( $alien ){
+            echo $alien->ToJson() . PHP_EOL;
+        }
+
     }
 
 ?>

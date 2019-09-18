@@ -5,22 +5,25 @@
 
     $caso = '';
 
-    if( isset($_POST['caso']))
+    if( isset($_POST['caso']) )
         $caso = $_POST['caso'];
-    else if( isset($_GET['caso']))
+    else if( isset($_GET['caso']) )
         $caso = $_GET['caso'];
-    
-    switch($caso){
+
+    switch( $caso ){
         case 'cargarAlumno':
             Alumno::cargarAlumno();
             break;
         case 'mostrarAlumnos':
             Alumno::mostrarAlumnos();
             break;
-        case 'manejarArchivo':
-            Alumno::manejarArchivo();
+        case 'modificarAlumno':
+            Alumno::modificarAlumno();
+            break;
+        case 'mostrarImagenes':
+            Alumno::mostrarImagenes();
             break;
         default:
-            echo 'Debe ingresar un caso valido!';
+            echo '{"mensaje":"Debe ingresar un caso valido"}';
     }
 ?>
