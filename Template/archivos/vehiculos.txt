@@ -1,5 +1,3 @@
-{"marca":"Peugeot","modelo":"207","patente":"jvt662","precio":"250000"}
-{"marca":"Chevrolet","modelo":"Corsa","patente":"gvt235","precio":"250000"}
-{"marca":"Chevrolet","modelo":"Corsa","patente":"gvt235","precio":"250000"}
-{"marca":"Chevrolet","modelo":"Corsa","patente":"gvt235","precio":"250000"}
-{"marca":"Chevrolet","modelo":"Corsa","patente":"gvt235","precio":"250000"}
+{"marca":"Peugeot","modelo":"207","patente":"jvt662","precio":"250000","foto":null}
+{"marca":"Duna","modelo":"Fiat","patente":"gvt235","precio":"100000","foto":".\/img\/gvt235.jpg"}
+{"marca":"Chevrolet","modelo":"Corsa","patente":"gvt245","precio":"250000","foto":null}

@@ -35,7 +35,7 @@
         });
 
         $this->get('/consultarVehiculo', function ($request, $response, $args) {
-            return $response->withJson(Vehiculo::mostrar());          
+            return $response->withJson(Vehiculo::retornarVehiculos());          
         });
         
         $this->post('/cargarTipoServicio', function($request, $response, $args){
@@ -81,16 +81,35 @@
         $this->get('/inscripciones', function ($request, $response, $args) {
             $datos = $request->getQueryParams();
             if(isset($datos['tipo'])){
-                var_dump($datos);
+                Turno::filtrarPorTipo($datos['tipo']);
             }else if(isset($datos['fecha'])){
 
             }else
                 echo '{"mensaje":"Debe ingresar un parametro de busqueda"}';          
         });
-        
-        // Ver getQueryParamas
-        // getQuery
-        // geturl
+
+        $this->post('/modificarVehiculo', function($request, $response, $args){
+            $datos = $request->getParsedBody();
+            $img = $request->getUploadedFiles();
+            
+            // Validar que no haya campos nulos
+            if(isset($datos['marca'], $datos['modelo'], $datos['patente'], $datos['precio'])){
+                //Validar que no esten vacios
+                if(!empty($datos['marca']) && !empty($datos['modelo']) && !empty($datos['patente']) && !empty($datos['precio'])){
+                    //Validar patente
+                    if(Validar::validarPatente($datos['patente'])){
+                        if($img != null){
+                            Vehiculo::modificar($datos, $img['foto']);
+                            echo '{"mensaje":"Vehiculo modificado"}';
+                        }else
+                            echo '{"mensaje":"Debe ingresar una imagen"}';
+                    }else
+                        echo '{"mensaje":"No existe vehiculo con esa patente"}';
+                }else
+                    echo '{"mensaje":"No puede haber campos vacios"}';
+            }else
+                echo '{"mensaje":"Falta completar datos"}';
+        });
         
     });
 
