@@ -1,30 +1,98 @@
 <?php
-    use \Psr\Http\Message\ServerRequestInterface as Request;
-    use \Psr\Http\Message\ResponseInterface as Response;
+     use \Psr\Http\Message\ServerRequestInterface as Request;
+     use \Psr\Http\Message\ResponseInterface as Response;
 
-    require_once './vendor/autoload.php';
-    require_once './clases/alumno.php';
-    require_once './clases/persona.php';
-    require_once './clases/alumnoDAO.php';
-    require_once './clases/archivo.php';
+     require_once './vendor/autoload.php';
+     require_once './clases/vehiculo.php';
+     require_once './clases/servicio.php';
+     require_once './clases/validar.php';
+     require_once './clases/archivo.php';
 
-    $config['displayErrorDetails'] = true;
-    $config['addContentLengthHeader'] = false;
+     $config['displayErrorDetails'] = true;
+     $config['addContentLengthHeader'] = false;
+     
+     $app = new \Slim\App(["settings" => $config]);
+     
+     $app->group('/vehiculo', function(){
 
-    $app = new \Slim\App(["settings" => $config]);
-
-    $app->group('/alumno', function(){
-        $this->get('/', function ($request, $response, $args) {
-            $new = $response->withJson(Alumno::mostrar());
-            return $new;            
-        });
-
-        $this->post('/agregar', function ($request, $response, $args) {
+        /*1-(2pt.) cargarVehiculo(post): Se deben guardar los siguientes datos: marca, modelo, patentey precio. Losdatos se guardan en el archivo detexto vehiculos.txt, tomando la patentecomo identificador(la patente no puede estar repetida).*/
+        $this->post('/cargarVehiculo', function($request, $response, $args){
             $datos = $request->getParsedBody();
-            $alumno = new Alumno($datos['nombre'], )
+            // Validar que no haya campos nulos
+            if(isset($datos['marca'], $datos['modelo'], $datos['patente'], $datos['precio'])){
+                //Validar que no esten vacios
+                if(!empty($datos['marca']) && !empty($datos['modelo']) && !empty($datos['patente']) && !empty($datos['precio'])){
+                    //Validar patente
+                    if(!Validar::validarPatente($datos['patente'])){
+                        $vehiculo = new Vehiculo($datos['marca'], $datos['modelo'], $datos['patente'], $datos['precio']);
+                        Vehiculo::agregar($vehiculo);
+                    }else
+                        echo '{"mensaje":"Ya existe vehiculo con esa patente"}';
+                }else
+                    echo '{"mensaje":"No puede haber campos vacios"}';
+            }else
+                echo '{"mensaje":"Falta completar datos"}';
         });
+
+        $this->get('/consultarVehiculo', function ($request, $response, $args) {
+            return $response->withJson(Vehiculo::mostrar());          
+        });
+        
+        $this->post('/cargarTipoServicio', function($request, $response, $args){
+            $datos = $request->getParsedBody();
+            if(isset($datos['id'], $datos['tipo'], $datos['precio'], $datos['demora'])){
+                if(!empty($datos['id']) && !empty($datos['tipo']) && !empty($datos['precio']) && !empty($datos['demora'])){
+                    if(!Validar::validarId($datos['id'])){
+                        if(Validar::validarTipo($datos['tipo'])){
+                            $servicio = new Vehiculo($datos['id'], $datos['tipo'], $datos['precio'], $datos['precio']);
+                            Servicio::agregar($servicio);
+                        }else
+                            echo '{"mensaje":"Ingrese tipo valido"}';
+                    }else
+                        echo '{"mensaje":"Ya existe servicio con ese id"}';
+                }else
+                    echo '{"mensaje":"No puede haber campos vacios"}';
+            }else
+                echo '{"mensaje":"Falta completar datos"}';
+        });
+        
+        $this->post('/sacarTurno', function($request, $response, $args){
+            $datos = $request->getParsedBody();
+            if(isset($datos['patente'], $datos['fecha'])){
+                if(!empty($datos['patente']) && !empty($datos['fecha'])){
+                    if(Validar::validarPatente($datos['patente'])){
+                        if(Validar::validarFecha($datos['fecha'])){
+                            // $turno = new Turno()
+                        }else
+                            echo '{"mensaje":"Ingrese una fecha valida"}';
+                    }else
+                        echo '{"mensaje":"No existe vehiculo con esa patente"}';
+                }else
+                    echo '{"mensaje":"No puede haber campos vacios"}';
+            }else
+                echo '{"mensaje":"Falta completar datos"}';
+        });
+
+        $this->get('/turnos', function ($request, $response, $args) {
+            return $response->withJson(Servicio::mostrar());          
+        });
+
+        /*6-(2pts.) inscripciones(get): Puede recibir el tipo de servicio o la fecha y filtra la tabla de acuerdo al parámetro pasado.*/
+        $this->get('/inscripciones', function ($request, $response, $args) {
+            $datos = $request->getQueryParams();
+            if(isset($datos['tipo'])){
+                var_dump($datos);
+            }else if(isset($datos['fecha'])){
+
+            }else
+                echo '{"mensaje":"Debe ingresar un parametro de busqueda"}';          
+        });
+        
+        // Ver getQueryParamas
+        // getQuery
+        // geturl
+        
     });
+
     $app->run();
-
-
 ?>

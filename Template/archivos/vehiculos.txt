@@ -1,0 +1,5 @@
+{"marca":"Peugeot","modelo":"207","patente":"jvt662","precio":"250000"}
+{"marca":"Chevrolet","modelo":"Corsa","patente":"gvt235","precio":"250000"}
+{"marca":"Chevrolet","modelo":"Corsa","patente":"gvt235","precio":"250000"}
+{"marca":"Chevrolet","modelo":"Corsa","patente":"gvt235","precio":"250000"}
+{"marca":"Chevrolet","modelo":"Corsa","patente":"gvt235","precio":"250000"}
