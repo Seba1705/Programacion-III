@@ -110,6 +110,10 @@
             }else
                 echo '{"mensaje":"Falta completar datos"}';
         });
+
+        $this->get('/vehiculos', function($request, $response, $args){
+            return Vehiculo::vehiculos();     
+        });
         
     });
 

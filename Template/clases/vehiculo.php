@@ -65,7 +65,73 @@
             Archivo::guardarTodos('./archivos/vehiculos.txt', $vehiculos);
         }
 
-        public static function eliminar(){
+        public static function vehiculos(){
+            $datos = "<!DOCTYPE html>
+                        <html lang='en'>
+                        <head>
+                            <title>Vehiculos</title>
+                        </head>
+                        <style>
+                            table{
+                                width: 100%;
+                                border-collapse: collapse; /*sin bordes entre los elementos internos*/
+                            }
+                        
+                            thead{
+                                font-size: 18px;
+                                font-weight: bold;
+                            }
+
+                            th, td{
+                                text-align: center;
+                                padding: 10px;
+                            }
+                        
+                            tr:nth-child(even){
+                                background-color: #f2f2f2;
+                            }
+                        
+                            th{
+                                background:#252932;
+                                color: #fff;
+                                font: bold;
+                            }
+                        
+                            img{
+                                height: 80px;
+                                width: 80px;
+                                border-radius: 100%;
+                            }
+                        </style>
+                        <body>
+                            <table>
+                                <thead>
+                                    <tr>
+                                        <td>Marca</td>
+                                        <td>Modelo</td>
+                                        <td>Patente</td>
+                                        <td>Precio</td>
+                                        <td>Foto</td>
+                                    </tr>
+                                </thead>
+                                <tbody>";
+
+            $vehiculos = Vehiculo::retornarVehiculos();
+            foreach($vehiculos as $item){
+                $datos .= "<tr>
+                                <td>" .$item->marca. "</td>
+                                <td>" .$item->modelo. "</td>
+                                <td>" .$item->patente. "</td>
+                                <td>" .$item->precio. "</td>
+                                <td><img src='." .$item->foto. "'/></td>
+                        </tr>";
+            }   
+            $datos .= " </tbody>
+                    </table>
+                </body>
+                </html>";
+
+            echo $datos;
 
         }
 
