@@ -3,7 +3,7 @@
      use \Psr\Http\Message\ResponseInterface as Response;
 
      require_once './vendor/autoload.php';
-     require_once './clases/validar.php';
+     require_once './clases/entidad.php';
      require_once './clases/archivo.php';
      // Faltan entidades
 
@@ -23,7 +23,10 @@
         });
 
         $this->post('/alta', function($request, $response, $args){
-            
+            $datos = $request->getParsedBody();
+            var_dump($datos);
+            // $objeto = new ...
+            // Entidad::alta($objeto);
         });
 
         $this->post('/baja', function($request, $response, $args){
@@ -31,7 +34,8 @@
         });
 
         $this->post('/modificar', function($request, $response, $args){
-
+            $datos = $request->getParsedBody();
+            var_dump($datos);
         });
         
     });
