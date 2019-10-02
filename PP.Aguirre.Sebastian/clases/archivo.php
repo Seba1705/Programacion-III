@@ -9,7 +9,7 @@
 
         // Guarda la lista de objetos en el archivo
         public static function guardarTodos($ruta, $lista){
-            $archivo = fopen($path, 'w');
+            $archivo = fopen($ruta, 'w');
             foreach($lista as $item){
                 fwrite($archivo, $item->toJSON() . PHP_EOL);
             }
