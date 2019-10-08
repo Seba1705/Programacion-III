@@ -129,33 +129,79 @@
             echo '{"mensaje":"Complete todos los campos requeridos"}';
     });
 
-    /*5- (2 pts.) ​Ruta: pizzas ​(PUT). Se reciben los datos a modificar, incluidas las imágenes. En el caso de haberimágenes, se deben mover las imágenes viejas a la carpeta images/backup.*/
-    $app->put('/pizzas', function(Request $request, Response $response, array $args){
-        // guardarLog($request->getMethod(), $request->getUri()->getPath());
+    /*5- (2 pts.) ​Ruta: pizzas ​(PUT). Se reciben los datos a modificar, incluidas las imágenes. En el caso de haber imágenes, se deben mover las imágenes viejas a la carpeta images/backup.*/
+    $app->post('/pizzasMod', function(Request $request, Response $response, array $args){
+        guardarLog($request->getMethod(), $request->getUri()->getPath());
 
         $datos = $request->getParsedBody();
         $img = $request->getUploadedFiles();
-      
-        var_dump($img);
         
-        // if(isset($datos['precio'], $datos['tipo'], $datos['sabor'], $datos['cantidad'], $datos['id'])){
-        //     $email = $datos['email']; $tipo = $datos['tipo']; $sabor = $datos['sabor']; $cantidad = $datos['cantidad']; $id = $datos['id'];
-        //     if(!empty($email) && !empty($tipo) && !empty($sabor) && !empty($cantidad) && !empty($id)){
-        //         if($img['imagen'] != null && $img['foto'] != null){
-        //             if(Pizza::validarTipo($tipo)){
-        //                 if(Pizza::validarSabor($sabor)){
-        //                     // Pizza::modificar($datos, $img);
-        //                     echo 'entre';
-        //                 }else
-        //                     echo '{"mensaje":"Ingrese un sabor valido"}';
-        //             }else
-        //                 echo '{"mensaje":"Ingrese un tipo valido"}';
-        //         }else
-        //             echo '{"mensaje":"Debe ingresar 2 imagenes"}';
-        //     }else
-        //         echo '{"mensaje":"No puede haber campos vacíos"}';
-        // }else
-        //     echo '{"mensaje":"Complete todos los campos requeridos"}';
+        if(isset($datos['precio'], $datos['tipo'], $datos['sabor'], $datos['cantidad'], $datos['id'])){
+            $email = $datos['email']; $tipo = $datos['tipo']; $sabor = $datos['sabor']; $cantidad = $datos['cantidad']; $id = $datos['id'];
+            if(!empty($email) && !empty($tipo) && !empty($sabor) && !empty($cantidad) && !empty($id)){
+                if($img['imagen'] != null && $img['foto'] != null){
+                    if(Pizza::validarTipo($tipo)){
+                        if(Pizza::validarSabor($sabor)){
+                            if(Pizza::existeId($id)){
+                                Pizza::modificar($datos, $img);
+                            }else
+                                echo '{"mensaje":"No existe pizza con ese id"}';
+                        }else
+                            echo '{"mensaje":"Ingrese un sabor valido"}';
+                    }else
+                        echo '{"mensaje":"Ingrese un tipo valido"}';
+                }else
+                    echo '{"mensaje":"Debe ingresar 2 imagenes"}';
+            }else
+                echo '{"mensaje":"No puede haber campos vacíos"}';
+        }else
+            echo '{"mensaje":"Complete todos los campos requeridos"}';
+    });
+
+    /*6- (2 pts.) ​Ruta: ventas ​(GET).  Debe recibir tipo y/o sabor y mostrar las coincidencias.*/
+    $app->get('/ventas', function(Request $request, Response $response, array $args){
+        guardarLog($request->getMethod(), $request->getUri()->getPath());
+
+        $arrDatos = $request->getQueryParams();
+        if(isset($arrDatos['tipo']) || isset($arrDatos['sabor'])){
+            if(!empty($arrDatos['tipo'])){
+                if(Pizza::validarTipo($arrDatos['tipo'])){
+                    Venta::filtrarPorTipo($arrDatos['tipo']);
+                }else
+                    echo '{"mensaje":"Ingrese un tipo valido"}';
+            }
+            if(!empty($arrDatos['sabor'])){
+                if(Pizza::validarSabor($arrDatos['sabor'])){
+                    Venta::filtrarPorSabor($arrDatos['sabor']);
+                }else
+                    echo '{"mensaje":"Ingrese un sabor valido"}';
+            }
+        }else
+            echo '{"mensaje":"Ingrese tipo o sabor"}';
+    });
+
+    /*7- (2 pts.) ​Ruta: pizzas​(DELETE), Recibe id  de la pizza, de encontrarse en el archivo se deben borrar esos datos y mover la foto a la carpeta​ /backUpFotos​  y  colocarle al nombre la fecha de hoy.*/
+    $app->delete('/ventas', function(Request $request, Response $response, array $args){
+        guardarLog($request->getMethod(), $request->getUri()->getPath());
+        $datos = $request->getParsedBody();
+        if(isset($datos['id']) && !empty($datos['id'])){
+            if(Pizza::existeId($datos['id'])){
+                Pizza::borrar($datos['id']);
+            }else
+                echo '{"mensaje":"No existe pizza con ese Id"}';
+        }else
+            echo '{"mensaje":"Ingrese un id valido"}';
+    });
+
+    /*8- (1 pt) ​Ruta: logs ​(GET). Recibe una fecha y muestra los logs posteriores a esta.*/
+    $app->get('/logs', function(Request $request, Response $response, array $args){
+        //guardarLog($request->getMethod(), $request->getUri()->getPath());
+
+        $arrDatos = $request->getQueryParams();
+        if(isset($arrDatos['fecha']) && !empty($arrDatos['fecha'])){
+            
+        }else
+            echo '{"mensaje":"Ingrese un fecha"}';
     });
 
     $app->run();
