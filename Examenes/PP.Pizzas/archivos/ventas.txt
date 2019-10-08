@@ -1,0 +1,6 @@
+{"id":1,"email":"seba@gmail.com","tipo":"molde","cantidad":"2","sabor":"muzza","precio":260}
+{"id":2,"email":"seba@gmail.com","tipo":"molde","cantidad":"2","sabor":"muzza","precio":260}
+{"id":3,"email":"seba@gmail.com","tipo":"molde","cantidad":"2","sabor":"muzza","precio":260}
+{"id":4,"email":"seba@gmail.com","tipo":"molde","cantidad":"2","sabor":"muzza","precio":260}
+{"id":5,"email":"seba@gmail.com","tipo":"molde","cantidad":"2","sabor":"muzza","precio":260}
+{"id":6,"email":"seba@gmail.com","tipo":"molde","cantidad":"2","sabor":"muzza","precio":260}
