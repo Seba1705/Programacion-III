@@ -1,1 +1,0 @@
-{"id":4,"precio":"125","tipo":"molde","cantidad":2,"sabor":"jamon","imagen":".\/images\/pizzas\/4-imagen.jpg","foto":".\/images\/pizzas\/4-foto.jpg"}

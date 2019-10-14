@@ -1,8 +1,0 @@
-{"id":9,"email":"125","tipo":"molde","cantidad":"1","sabor":"jamon","precio":125}
-{"id":10,"email":"125","tipo":"molde","cantidad":"1","sabor":"jamon","precio":125}
-{"id":11,"email":"125","tipo":"molde","cantidad":"1","sabor":"jamon","precio":125}
-{"id":12,"email":"125","tipo":"molde","cantidad":"1","sabor":"jamon","precio":125}
-{"id":13,"email":"125","tipo":"molde","cantidad":"1","sabor":"jamon","precio":125}
-{"id":14,"email":"125","tipo":"molde","cantidad":"1","sabor":"jamon","precio":125}
-{"id":15,"email":"125","tipo":"molde","cantidad":"1","sabor":"jamon","precio":125}
-{"id":16,"email":"125","tipo":"molde","cantidad":"1","sabor":"jamon","precio":125}

@@ -1,0 +1,2 @@
+{"legajo":"12","email":"juan@gmail.com","nombre":"Juan","clave":"1234","imagen":".\/img\/12-imagen.jpg","foto":".\/img\/12-foto.jpg"}
+{"legajo":"123","email":"micaela@gmail.com","nombre":"Micaela","clave":"1234","imagen":".\/img\/123-imagen.jpg","foto":".\/img\/123-foto.jpg"}
