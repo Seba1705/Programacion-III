@@ -1,40 +1,37 @@
 <?php
     class Servicio{
         public $id;
+        public $nombre;
         public $tipo;
         public $precio;
         public $demora;
 
-        function __construct($id, $tipo, $precio, $demora){
+        function __construct($id, $nombre, $tipo, $precio, $demora){
             $this->id = $id;
+            $this->nombre = $nombre;
             $this->tipo = $tipo;
             $this->precio = $precio;
             $this->demora = $demora;
         }
 
-        public function toCSV(){
-            $sep = ";";
-            return $this->id . $sep . $this->tipo . $sep . $this->precio . $sep . $this->demora . PHP_EOL;
+        public function toJson(){
+            return json_encode($this);
         }
 
-        public function toString(){
-            return  'id: ' . $this->id . ' tipo: '.$this->tipo . ' precio: ' . $this->precio . ' demora: ' . $this->demora . PHP_EOL;
-        }
-
-        ////////////////////////////////////////////////////////////////////////////////////////////////////////
-        // CARGAR TIPO SERVICIO
-        ////////////////////////////////////////////////////////////////////////////////////////////////////////
-
+        /*3- (1 pts.) caso: cargarTipoServicio(post): Se recibe el nombre del servicio a realizar: id, tipo(de los 10.000km,
+        20.000km, 50.000km), precio y demora, y se guardara en el archivo tiposServicio.xxx.*/
         public static function cargarTipoServicio(){
             if($_SERVER['REQUEST_METHOD'] == 'POST'){
                 //VERIFICAMOS QUE ESTEN TODAS LAS VARIABLES
-                if( isset($_POST['tipo']) && !empty($_POST['tipo']) &&
+                if( isset($_POST['nombre']) && !empty($_POST['nombre']) &&
+                    isset($_POST['tipo']) && !empty($_POST['tipo']) &&
                     isset($_POST['precio']) && !empty($_POST['precio']) &&
                     isset($_POST['demora']) && !empty($_POST['demora'])){ 
                     if(Servicio::validarTipoServicio($_POST['tipo'])){
                         $id = Servicio::generarNuevoId();
-                        $servicio = new Servicio($id, $_POST['tipo'],$_POST['precio'],$_POST['demora']);
-                        Servicio::guardarServicioEnArchivo($servicio);
+                        $servicio = new Servicio($id, $_POST['nombre'], $_POST['tipo'], $_POST['precio'], $_POST['demora']);
+                        Archivo::guardarUno('./archivos/tiposServicio.txt', $servicio);
+                        echo "Servicio cargado";
                     }
                     else{
                         echo "Ingrese un tipo de servicio valido.";
@@ -68,27 +65,61 @@
             return false;
         }
 
-        public static function guardarServicioEnArchivo($servicio){
-            $rutaArchivo = './archivos/servicios.txt';
-            $archivo = fopen($rutaArchivo, 'a+');
-            fwrite($archivo, $servicio->toCSV());
-            fclose($archivo);
-            echo 'Servicio guardado!';
+        public static function retornarServicios(){
+            $datos = Archivo::leerArchivo('./archivos/tiposServicio.txt');
+            $servicios = array();
+            foreach ($datos as $key => $value) {
+                $item = new Servicio($value->id, $value->nombre, $value->tipo, $value->precio, $value->demora);
+                array_push($servicios, $item);
+            }
+            return $servicios;
         }
 
-        public static function leerArchivoDeServicios(){
-            $rutaArchivo = './archivos/servicios.txt';
-            $retorno = array(); //Lo va a devolver con las entidades leidas
-            $archivo = fopen($rutaArchivo, 'r');
-            do{
-                $servicio = trim(fgets($archivo));
-                if ($servicio != ""){
-                    $servicio = explode(';', $servicio);
-                    array_push($retorno, new Servicio($servicio[0], $servicio[1],$servicio[2], $servicio[3]));
+        /*6- (2pts.) caso: servicio(get): Puede recibir el tipo de servicio o la fecha y filtra la tabla de acuerdo al parámetro pasado.*/
+        public static function servicio(){
+            if($_SERVER['REQUEST_METHOD'] == 'GET'){
+                //VERIFICAMOS QUE ESTEN TODAS LAS VARIABLES
+                if( (isset($_GET['tipo']) && !empty($_GET['tipo'])) || (isset($_GET['fecha']) && !empty($_GET['fecha']))) { 
+                    if(isset($_GET['tipo'])){
+                        if(Servicio::validarTipoServicio($_GET['tipo'])){
+                            $tipo = $_GET['tipo'];
+                            $consultados = array_filter(Turno::retornarTurnos(), function( $objeto ) use ( $tipo ){
+                                return strcasecmp( $objeto->tipo, $tipo ) == 0;
+                            });
+                            echo PHP_EOL . 'Filtrados por Tipo: ' . $tipo . PHP_EOL . PHP_EOL;
+                            if(count($consultados) == 0) 
+                                echo 'No hay turnos' .PHP_EOL;
+                            array_map('Turno::mostrarTurno', $consultados);
+                        }else{
+                            echo 'Ingrese un tipo valido';
+                        }
+                    }
+                    if(isset($_GET['fecha'])){
+                        if(Turno::validarFecha($_GET['fecha'])){
+                            $fecha = $_GET['fecha'];
+                            $consultados = array_filter(Turno::retornarTurnos(), function( $objeto ) use ( $fecha ){
+                                return strcasecmp( $objeto->fecha, $fecha ) == 0;
+                            });
+                            echo PHP_EOL . 'Filtrados por Fecha: ' . $fecha . PHP_EOL . PHP_EOL;
+                            if(count($consultados) == 0) 
+                                echo 'No hay turnos' .PHP_EOL;
+                            array_map('Turno::mostrarTurno', $consultados);
+                        }else{
+                            echo 'ingrese fecha valida';
+                        }
+                    }
                 }
-            }while(!feof($archivo));
-            fclose($archivo); 
-            return $retorno;   
+                else{
+                    echo "Debe ingresar patente o marca.";
+                }
+            }
+            else{
+                echo "ERROR: Se debe llamar con metodo GET.";
+            }
+        }
+
+        public static function mostrarServicio($servicio){
+            echo $servicio->toJson() . PHP_EOL;
         }
 
     }

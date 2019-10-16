@@ -1,0 +1,8 @@
+chevrolet;astra;452asf;250000
+peugeot;207;jvt662;250000
+Fiat;1500;jvt655;120000
+Chevrolet;Corsa;hgq123;150000
+Chevrolet;Corsa;kju754;150000
+Fiat;Siena;ccd345;180000
+Fiat;147;akx123;180000
+Audi;A3;akx124;350000

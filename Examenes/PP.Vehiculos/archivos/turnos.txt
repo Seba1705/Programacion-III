@@ -1,2 +1,4 @@
-Fiat;10000;ccd345;180000;28
-Fiat;50000;akx123;180000;25
+{"fecha":"28","patente":"jvt662","marca":"Fiat","precio":"100","tipo":"50000"}
+{"fecha":"25","patente":"jvt662","marca":"Fiat","precio":"100","tipo":"10000"}
+{"fecha":"25","patente":"jvt662","marca":"Fiat","precio":"100","tipo":"10000"}
+{"fecha":"25","patente":"jvt662","marca":"Fiat","precio":"100","tipo":"10000"}

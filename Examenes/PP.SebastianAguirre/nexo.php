@@ -1,6 +1,5 @@
 <?php
     include_once './clases/vehiculo.php';
-    include_once './clases/archivo.php';
     include_once './clases/servicio.php';
     include_once './clases/turno.php';
 
@@ -29,8 +28,8 @@
         case 'turnos':
             Turno::turnos();
             break;
-        case 'servicio':
-            Servicio::servicio();
+        case 'inscripciones':
+            Turno::inscripciones();
             break;
         case 'modificarVehiculo':
             Vehiculo::modificarVehiculo();

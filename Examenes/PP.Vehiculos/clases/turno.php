@@ -1,12 +1,12 @@
 <?php
     class Turno{
-        private $fecha;
-        private $patente;
-        private $marca;
-        private $precio;
-        private $tipo;
+        public $fecha;
+        public $patente;
+        public $marca;
+        public $precio;
+        public $tipo;
         
-        function __construct($marca, $tipo, $patente, $precio, $fecha){
+        function __construct($fecha, $patente, $marca, $precio, $tipo){
             $this->marca = $marca;
             $this->tipo = $tipo;
             $this->patente = $patente;
@@ -14,19 +14,13 @@
             $this->fecha = $fecha;
         }
 
-        public function toCSV(){
-            $sep = ";";
-            return $this->marca . $sep . $this->tipo . $sep . $this->patente . $sep . $this->precio . $sep . $this->fecha . PHP_EOL;
+        public function toJSON(){
+            return json_encode($this);
         }
 
-        public function toString(){
-            return  'Marca: ' . $this->marca . ' tipo: '.$this->tipo . ' Patente: ' . $this->patente . ' Precio: ' . $this->precio . ' Fecha ' . $this->fecha .PHP_EOL;
-        }
-
-        ////////////////////////////////////////////////////////////////////////////////////////////////////////
-        // SACAR TURNO
-        ////////////////////////////////////////////////////////////////////////////////////////////////////////
-
+        /*4- (2pts.) caso: sacarTurno (get): Se recibe patente, precio y fecha (día) y se debe guardar en el archivo
+        turnos.txt, fecha, patente, modelo, precio y tipo de servicio. Si no hay cupo o la materia no existe informar cada
+        caso particular.*/
         public static function sacarTurno(){
             if($_SERVER['REQUEST_METHOD'] == 'POST'){
                 if( isset($_POST['marca']) && !empty($_POST['marca']) &&
@@ -36,8 +30,13 @@
                     isset($_POST['precio']) && !empty($_POST['precio'])){ 
                     
                     if(Turno::validarFecha($_POST['fecha'])){
-                        $turno = new Turno($_POST['marca'], $_POST['tipo'], $_POST['patente'], $_POST['precio'],$_POST['fecha']);
-                        Turno::guardarTurnoEnArchivo($turno);
+                        if(Servicio::validarTipoServicio($_POST['tipo'])){
+                            $turno = new Turno($_POST['fecha'], $_POST['patente'], $_POST['marca'], $_POST['precio'],$_POST['tipo']);
+                            Archivo::guardarUno('./archivos/turnos.txt', $turno);
+                            echo 'Turno guardado';
+                        }else{
+                            echo 'Ingrese un tipo de servicio valido';
+                        }
                     }
                     else{
                         echo 'Ingrese una dia del 1 al 30';
@@ -60,81 +59,26 @@
             return true;
         }
 
-        public static function guardarTurnoEnArchivo($turno){
-            $rutaArchivo = './archivos/turnos.txt';
-            $archivo = fopen($rutaArchivo, 'a+');
-            fwrite($archivo, $turno->toCSV());
-            fclose($archivo);
-            echo 'turno guardado!';
+        public static function retornarTurnos(){
+            $datos = Archivo::leerArchivo('./archivos/turnos.txt');
+            $turnos = array();
+            foreach ($datos as $key => $value) {
+                $item = new Turno($value->fecha, $value->patente, $value->marca, $value->precio, $value->tipo);
+                array_push($turnos, $item);
+            }
+            return $turnos;
         }
 
-        public static function leerArchivoDeTurnos(){
-            $rutaArchivo = './archivos/turnos.txt';
-            $retorno = array(); //Lo va a devolver con las entidades leidas
-            $archivo = fopen($rutaArchivo, 'r');
-            do{
-                $turno = trim(fgets($archivo));
-                if ($turno != ""){
-                    $turno = explode(';', $turno);
-                    array_push($retorno, new turno($turno[0], $turno[1],$turno[2], $turno[3], $turno[4]));
-                }
-            }while(!feof($archivo));
-            fclose($archivo); 
-            return $retorno;   
-        }
-
-        ////////////////////////////////////////////////////////////////////////////////////////////////////////
-        // TURNOS
-        ////////////////////////////////////////////////////////////////////////////////////////////////////////
-
+        /*5- (1pt.) caso: turnos(get): Se devuelve un tabla con todos los servicios.*/
         public static function turnos(){
-            $turnos = Turno::leerArchivoDeTurnos();
-            foreach($turnos as $turno){
-                echo $turno->toString();
-            }
+            echo 'Servicios' .PHP_EOL.PHP_EOL;
+
+            array_map('Servicio::mostrarServicio', Servicio::retornarServicios());
         }
 
-        ////////////////////////////////////////////////////////////////////////////////////////////////////////
-        // INSCRIPCIONES
-        ////////////////////////////////////////////////////////////////////////////////////////////////////////
-
-        public static function inscripciones(){
-            $vehiculos = Vehiculo::leerArchivoDeVehiculos();
-            if($_SERVER['REQUEST_METHOD'] == 'GET'){
-                if( isset($_GET['parametro']) && !empty($_GET['parametro']) ){
-                    $parametro = $_GET['parametro'];
-                    $turnos = Turno::leerArchivoDeTurnos();
-                    $filtrados = [];
-                    foreach($turnos as $turno){
-                        if(Turno::existeParametroEnTurno($turno, $parametro)){
-                            array_push($filtrados, $turno);
-                        }
-                    }
-                    if(sizeof($filtrados) > 0){
-                        foreach($filtrados as $turno){
-                            echo $turno->toString();
-                        }
-                    }
-                    else{
-                        echo 'No existe ' . $parametro;
-                    }
-                }
-                else{
-                    echo "Debe ingresar un parametro de busqueda.";
-                }
-            }
-            else{
-                echo "ERROR: Se debe llamar con metodo GET.";
-            }
+        public static function mostrarTurno($turno){
+            echo $turno->toJson() . PHP_EOL;
         }
-        
-        public static function existeParametroEnTurno($turno, $parametro){
-            if( strcasecmp($turno->tipo, $parametro) == 0 ||  
-                strcasecmp($turno->fecha, $parametro) == 0){
-                return true;    
-            }
-            return false;
-        }
-
     }
+
 ?>

@@ -1,8 +1,5 @@
-chevrolet;astra;452asf;250000
-peugeot;207;jvt662;250000
-Fiat;1500;jvt655;120000
-Chevrolet;Corsa;hgq123;150000
-Chevrolet;Corsa;kju754;150000
-Fiat;Siena;ccd345;180000
-Fiat;147;akx123;180000
-Audi;A3;akx124;350000
+{"marca":"Fiat","patente":"akx124","kms":"100","foto":null}
+{"marca":"Chevrolet","patente":"jvt662","kms":"100","foto":".\/img\/jvt662.jpg"}
+{"marca":"Fiat","patente":"ajt658","kms":"100","foto":".\/img\/ajt658.jpg","modelo":"15000"}
+{"marca":"Nissas","patente":"as566ps","kms":"100","foto":null}
+{"marca":"Nissas","patente":"hgt656","kms":"100","foto":null}
