@@ -24,9 +24,9 @@ pNumero pNombre Precio Tamaño
 2 Cigarrillos 45,89 Mediano
 3 Gaseosa 15,80 Grande*/
 INSERT INTO `productos`
-VALUES 	(1, "Caramelos", 1, 5, "Chico"), 
-		(2, "Cigarrillos", 45, 89, "Mediano"), 
-        (3, "Gaseosa", 15, 80, "Grande")
+VALUES 	(1, "Caramelos", 1.5, "Chico"), 
+		(2, "Cigarrillos", 45.89, "Mediano"), 
+        (3, "Gaseosa", 15.80, "Grande")
 
 /*Envios
 Numero pNumero Cantidad
@@ -85,18 +85,39 @@ FROM envios
 INNER JOIN productos
 ON envios.pNumero = productos.pNumero
 
-/*8. Obtener la cantidad total del producto 1 enviado por el proveedor 102.
-9. Obtener todos los números de los productos suministrados por algún proveedor de
-‘Avellaneda’.
-10. Obtener los domicilios y localidades de los proveedores cuyos nombres contengan la
-letra ‘I’.
-11. Agregar el producto número 4, llamado ‘Chocolate’, de tamaño chico y con un precio
-de 25,35.
-12. Insertar un nuevo proveedor (únicamente con los campos obligatorios).
-13. Insertar un nuevo proveedor (107), donde el nombre y la localidad son ‘Rosales’ y ‘La
-Plata’.
-14. Cambiar los precios de los productos de tamaño ‘grande’ a 97,50.
-15. Cambiar el tamaño de ‘Chico’ a ‘Mediano’ de todos los productos cuyas cantidades
-sean mayores a 300 inclusive.
-16. Eliminar el producto número 1.
-17. Eliminar a todos los proveedores que no han enviado productos.*/
+/*8. Obtener la cantidad total del producto 1 enviado por el proveedor 102.*/
+SELECT Cantidad 
+FROM envios 
+WHERE pNumero = 1 
+AND Numero = 102
+
+/*9. Obtener todos los números de los productos suministrados por algún proveedor de ‘Avellaneda’.*/
+SELECT envios.pNumero 
+FROM envios 
+INNER JOIN proveedores 
+ON proveedores.Numero = envios.Numero 
+WHERE proveedores.Localidad = 'Avellaneda';
+
+/*10. Obtener los domicilios y localidades de los proveedores cuyos nombres contengan la letra ‘I’.*/
+ SELECT Domicilio, Nombre, Localidad
+ FROM proveedores 
+ WHERE Nombre 
+ LIKE '%i%'
+
+/*11. Agregar el producto número 4, llamado ‘Chocolate’, de tamaño chico y con un precio de 25,35.*/
+INSERT INTO productos
+VALUES (4, 'Chocolate', 25.35, 'chico')
+
+/*12. Insertar un nuevo proveedor (únicamente con los campos obligatorios).*/
+INSERT INTO proveedores (`Numero`) 
+VALUES (103)
+
+/*13. Insertar un nuevo proveedor (107), donde el nombre y la localidad son ‘Rosales’ y ‘La Plata’.*/
+
+/*14. Cambiar los precios de los productos de tamaño ‘grande’ a 97,50.*/
+
+/*15. Cambiar el tamaño de ‘Chico’ a ‘Mediano’ de todos los productos cuyas cantidades sean mayores a 300 inclusive.*/
+
+/*16. Eliminar el producto número 1.*/
+
+/*17. Eliminar a todos los proveedores que no han enviado productos.*/
