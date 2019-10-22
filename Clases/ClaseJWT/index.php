@@ -19,7 +19,7 @@
                 try {
                     $token = $request->getHeader('token')[0];
                     $decoded = JWT::decode($token, $key, array('HS256'));
-                    return $response->withJson($decoded, 200);
+                    return $response->withJson($decoded->data, 200);
                 }catch(Exception $e){
                     return $response->withJson($e->getMessage(), 200);
                 }
@@ -30,9 +30,14 @@
         $this->post('/', function ($request, $response) {
             $key = 'Seba1705';
             $datos = $request->getParsedBody();
+            $time = time();
             if( isset($datos['user']) && !empty($datos['user']) && isset($datos['pass']) && !empty($datos['pass'])){
                 $token = array(
-                    "user" => $datos['user']
+                    'iat' => $time, // Tiempo que inició el token
+                    'exp' => $time + (60*2), // Tiempo que expirará el token (+1 hora)
+                    'data' => [ // información del usuario
+                        'user' => $datos['user']
+                    ]
                 );
                 $jwt = JWT::encode($token, $key);
                 return $response->withJson($jwt, 200);
