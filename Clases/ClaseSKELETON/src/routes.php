@@ -3,6 +3,7 @@
     use Slim\Http\Request;
     use Slim\Http\Response;
     use App\Models\cd;
+    use App\Models\usuario;
     use App\Models\cdApi;
 
     return function (App $app) {
@@ -19,9 +20,9 @@
         // Rutas JWT
         $routes = require __DIR__ . '/../src/routes/routesJWT.php';
         $routes($app);
-
-        // Rutas Alumno
-        $routes = require __DIR__ . '/../src/routes/routesALUMNO.php';
+        
+        // Rutas Usuario
+        $routes = require __DIR__ . '/../src/routes/routesUSUARIO.php';
         $routes($app);
 
         $app->get('/[{name}]', function (Request $request, Response $response, array $args) use ($container) {
