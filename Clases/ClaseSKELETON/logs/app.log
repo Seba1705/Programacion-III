@@ -233,3 +233,9 @@
 [2019-11-06 00:22:03] UTN FRA LOGGER.INFO: metodo=DELETE, URI=http%3A%2F%2Flocalhost%2FProgramacion-III%2FClases%2FClaseSKELETON%2Fpublic, RUTA=Usuario%2F, autoridad=localhost [] {"uid":"bc387a3"}
 [2019-11-06 00:22:33] UTN FRA LOGGER.INFO: metodo=GET, URI=http%3A%2F%2Flocalhost%2FProgramacion-III%2FClases%2FClaseSKELETON%2Fpublic, RUTA=Usuario%2F, autoridad=localhost [] {"uid":"e07a906"}
 [2019-11-06 00:22:52] UTN FRA LOGGER.INFO: metodo=POST, URI=http%3A%2F%2Flocalhost%2FProgramacion-III%2FClases%2FClaseSKELETON%2Fpublic, RUTA=Usuario%2F, autoridad=localhost [] {"uid":"af4ba15"}
+[2019-11-06 01:44:54] UTN FRA LOGGER.INFO: metodo=POST, URI=http%3A%2F%2Flocalhost%2FProgramacion-III%2FClases%2FClaseSKELETON%2Fpublic, RUTA=Usuario%2F, autoridad=localhost [] {"uid":"b4bc505"}
+[2019-11-06 01:45:06] UTN FRA LOGGER.INFO: metodo=GET, URI=http%3A%2F%2Flocalhost%2FProgramacion-III%2FClases%2FClaseSKELETON%2Fpublic, RUTA=Usuario%2F, autoridad=localhost [] {"uid":"30c0759"}
+[2019-11-06 01:47:23] UTN FRA LOGGER.INFO: metodo=GET, URI=http%3A%2F%2Flocalhost%2FProgramacion-III%2FClases%2FClaseSKELETON%2Fpublic, RUTA=Usuario%2Flogin, autoridad=localhost [] {"uid":"bcff85b"}
+[2019-11-06 01:48:15] UTN FRA LOGGER.INFO: metodo=POST, URI=http%3A%2F%2Flocalhost%2FProgramacion-III%2FClases%2FClaseSKELETON%2Fpublic, RUTA=Usuario%2F, autoridad=localhost [] {"uid":"94f40cd"}
+[2019-11-06 01:48:20] UTN FRA LOGGER.INFO: metodo=GET, URI=http%3A%2F%2Flocalhost%2FProgramacion-III%2FClases%2FClaseSKELETON%2Fpublic, RUTA=Usuario%2Flogin, autoridad=localhost [] {"uid":"98e29b1"}
+[2019-11-06 01:48:29] UTN FRA LOGGER.INFO: metodo=GET, URI=http%3A%2F%2Flocalhost%2FProgramacion-III%2FClases%2FClaseSKELETON%2Fpublic, RUTA=Usuario%2Flogin, autoridad=localhost [] {"uid":"26cf32b"}

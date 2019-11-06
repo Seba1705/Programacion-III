@@ -84,6 +84,11 @@
                 return $newResponse;
             });
 
+            $this->get('/login', function ($request, $response, $args){
+                $res = hash_equals('stbu3CrK.J7XE', 'stbu3CrK.J7XE');
+                var_dump($res);
+            });
+
         });
     }
 ?>
