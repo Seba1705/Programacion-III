@@ -14,7 +14,6 @@
         $app->group('/JWT', function () {   
 
             $this->get('/', function ($request, $response, $args) {
-                //return cd::all()->toJson();
 
                 $token=null;
                 $arrayConToken = $request->getHeader('token');

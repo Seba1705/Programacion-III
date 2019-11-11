@@ -7,7 +7,6 @@
     use \Firebase\JWT\JWT as JWT;
 
     include_once __DIR__ . '/../../src/app/modelORM/usuario.php';
-    include_once __DIR__ . '/../../src/app/modelORM/cdControler.php';
 
     return function (App $app) {
         $container = $app->getContainer();
@@ -80,7 +79,11 @@
                 $id = $request->getParsedBody()['id'];
                 //echo  $id;
                 $user = usuario::destroy($id); // Retorna 1 si està ok - 0 si falla
-                $newResponse = $response->withJson($user, 200);
+                if($user == 1)
+                    $newResponse = $response->withJson('Usuario eliminado', 200);
+                else    
+                    $newResponse = $response->withJson('No existe usuario con ese ID', 200);
+
                 return $newResponse;
             });
 
