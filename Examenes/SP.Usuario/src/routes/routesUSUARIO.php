@@ -5,6 +5,8 @@
     use Slim\Http\Request;
     use Slim\Http\Response;
     use \Firebase\JWT\JWT as JWT;
+    use App\Models\AutentificadorJWT;
+
 
     include_once __DIR__ . '/../../src/app/modelORM/usuario.php';
 
@@ -49,55 +51,30 @@
                     isset($datos['nombre']) && !empty($datos['nombre'])){
                     // Datos enviados por parametros
                     $nombre = $datos['nombre'];
-                    $clave = $datos['clave'];                    
+                    $clave = crypt($datos['clave'], 'st');                    
                     // Busco usuario por nombre
-                    $user = usuario::where('nombre', $nombre);
-                    // Obtengo clave guardada en la base
-                    $claveBase = $user->get()[0]->clave;
-                    // Hago la comparacion
-                        
+                    $user = usuario::where('nombre', $nombre)->first();
+                    // Si es NULL el nombre no existe
+                    if ($user != NULL){
+                        // Clave del usuario que se quiere loguear
+                        $claveReal = $user->clave;
+                        // Verifico que las claves coincidan
+                        $res = hash_equals($clave, $claveReal);
+                        if( $res ){
+                            $jwt = AutentificadorJWT::crearToken($nombre);
+                            return $response->withJson($jwt, 200);
+                        }else   
+                            return $response->withJson('La clave es incorrecta', 200);
+                    }else
+                        return $response->withJson('El nombre de usuario no existe', 200);
                 }else
                     return $response->withJson('Debe ingresar nombre y clave', 200);
             });
 
-
-            $this->get('/token', function ($request, $response, $args) {
-                $key = 'Seba1705';
-                if( isset($request->getHeader('token')[0]) && !empty($request->getHeader('token')[0])){
-                    $token = $request->getHeader('token')[0];
-                    try {
-                        $token = $request->getHeader('token')[0];
-                        $decoded = JWT::decode($token, $key, array('HS256'));
-                        return $response->withJson($decoded->data, 200);
-                    }catch(Exception $e){
-                        return $response->withJson($e->getMessage(), 200);
-                    }
-                }else
-                    return $response->withJson('Debe ingresar el parametro token', 200);
+            /*3.(POST) materia: ​(Solo para admin). Recibe nombre, cuatrimestre y cupos.*/
+            $this->post('/materias', function($request, $response, $args){
+                echo 'materias';
             });
-
-            // Listar todos
-            $this->get('/', function ($request, $response, $args) {
-                $user = new usuario;
-                $datos = $user::all();
-                $newResponse = $response->withJson($datos, 200);  
-                return $newResponse;                
-            });
-
-            // Eliminar uno
-            $this->delete('/', function ($request, $response, $args) {
-                $id = $request->getParsedBody()['id'];
-                //echo  $id;
-                $user = usuario::destroy($id); // Retorna 1 si està ok - 0 si falla
-                if($user == 1)
-                    $newResponse = $response->withJson('Usuario eliminado', 200);
-                else    
-                    $newResponse = $response->withJson('No existe usuario con ese ID', 200);
-
-                return $newResponse;
-            });
-
-         
         });
     }
 ?>
