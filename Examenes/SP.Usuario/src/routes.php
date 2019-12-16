@@ -3,6 +3,7 @@
     use Slim\Http\Request;
     use Slim\Http\Response;
     use App\Models\usuario;
+    use App\Models\materia;
 
     return function (App $app) {
         $container = $app->getContainer();

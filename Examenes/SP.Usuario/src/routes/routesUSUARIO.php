@@ -2,6 +2,7 @@
 
     use Slim\App;
     use App\Models\ORM\usuario;
+    use App\Models\ORM\materia;
     use Slim\Http\Request;
     use Slim\Http\Response;
     use \Firebase\JWT\JWT as JWT;
@@ -61,7 +62,13 @@
                         // Verifico que las claves coincidan
                         $res = hash_equals($clave, $claveReal);
                         if( $res ){
-                            $jwt = AutentificadorJWT::crearToken($nombre);
+                            $data = array(
+                                'nombre' => $user->nombre,
+                                'legajo' => $user->legajo,
+                                'email' => $user->email,
+                                'tipo' => $user->tipo
+                            );
+                            $jwt = AutentificadorJWT::crearToken($data);
                             return $response->withJson($jwt, 200);
                         }else   
                             return $response->withJson('La clave es incorrecta', 200);
@@ -73,7 +80,26 @@
 
             /*3.(POST) materia: ​(Solo para admin). Recibe nombre, cuatrimestre y cupos.*/
             $this->post('/materias', function($request, $response, $args){
-                echo 'materias';
+                $datos = $request->getParsedBody();
+            
+                if( isset($datos['nombre']) && !empty($datos['nombre']) && 
+                    isset($datos['cuatrimestre']) && !empty($datos['cuatrimestre']) && 
+                    isset($datos['cupos']) && !empty($datos['cupos'])){            
+                    
+                    $materia = new materia;
+                    $materia->nombre = $datos['nombre'];           
+                    $materia->cuatrimestre = $datos['cuatrimestre'];
+                    $materia->cupos = $datos['cupos'];
+                    
+                    try{
+                        $materia->save();
+                        return $response->withJson('Materia cargada', 200);
+                    }catch(Exception $e){
+                        return $response->withJson($e->getMessage(), 200);
+                    }
+                }else
+                    return $response->withJson('Debe ingresar nombre, cupo y cuatrimestre', 200);
+
             });
         });
     }
